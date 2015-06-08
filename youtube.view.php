@@ -5,6 +5,7 @@
 //Studio2b(www.studio2b.kr)
 //Michael Son(mson0129@gmail.com)
 //07JUN2015(1.0.0.) - This module was newly created.
+//08JUN2015(1.0.1.) - The skin bug is fixed.(It can be ouccred when the skin value of module has nothing.)
 class youtubeView extends youtube {
 	function init() {
 		$this->setTemplatePath($this->module_path."tpl");
@@ -20,7 +21,7 @@ class youtubeView extends youtube {
 		$config = $oModuleModel->getModulePartConfig("youtube", $this->module_info->module_srl);
 		Context::set("config", $config);
 		
-		$tplPath = sprintf("%sskins/%s/", $this->module_path, $this->module_info->skin==NULL ? "default" : $this->module_info->skin);
+		$tplPath = sprintf("%sskins/%s/", $this->module_path, (is_null($this->module_info->skin) || $this->module_info->skin=="") ? "default" : $this->module_info->skin);
 		$this->setTemplatePath($tplPath);
 		
 		//$tplFile = str_replace("dispYouTube", "", $this->act);
