@@ -24,7 +24,7 @@ class youtubeView extends youtube {
 		Context::set("config", $config);
 		
 		//Template
-		$tplPath = sprintf("%sskins/%s/", $this->module_path, is_dir(sprintf("%sskins/%s/", $this->module_path, $this->module_info->skin)) ? $this->module_info->skin : "default");
+		$tplPath = sprintf("%sskins/%s/", $this->module_path, (!is_null($this->module_info->skin) && $this->module_info->skin=="" && is_dir(sprintf("%sskins/%s/", $this->module_path, $this->module_info->skin))) ? $this->module_info->skin : "default");
 		$this->setTemplatePath($tplPath);
 		$tplFile = strtolower(str_replace("dispYoutube", "", $this->act));
 		$this->setTemplateFile($tplFile);
