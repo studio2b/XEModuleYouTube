@@ -1,0 +1,47 @@
+<div class="peruse">
+	<!--@if($video)-->
+	<div class="peruse_header">
+		<h1 class="peruse_title"><a href="{$video[url]}">{$video[snippet][title]}</a></h1>
+		<p class="peruse_meta">
+			<span class="peruse_channel">{$video[snippet][channelTitle]}</span>
+			<span class="peruse_date">{date("Y-m-d h:i:s", $video[snippet][kst])}</span>
+		</p>
+	</div>
+	<div class="peruse_contents">
+		<div class="peruse_player">
+			<iframe width="{$videoSize[width]}" height="{$videoSize[height]}" src="https://www.youtube.com/embed/{$videoId}" frameborder="0" allowfullscreen></iframe>
+		</div>
+		<div class="peruse_description">
+			<p>{nl2br($video[snippet][description])}</p>
+		</div>
+	</div>
+	<div class="peruse_footer">
+		<div class="peruse_sns">
+			<ul>
+				<li><a href="http://facebook.com/" class="facebook tooltip"><i class="xi-facebook"></i></a></li>
+		    	<li><a href="#" class="google"><i class="xi-google-plus"></i></a></li>
+				<li><a href="http://twitter.com/" class="twitter"> <i class="xi-twitter"></i></a></li>
+		    </ul>
+			<script>
+				var sTitle = "{$video[snippet][title]}";
+				jQuery(function($){
+					$(".twitter").snspost({
+						type : "twitter",
+						content : sTitle + " {$video[fullUrl]}"
+					});
+					$(".facebook").snspost({
+						type : "facebook",
+						content : sTitle
+					});
+					$(".google").snspost({
+						type : "google",
+						content : sTitle
+					});
+				});
+			</script>		    
+		</div>
+	</div>
+	<!--@else-->
+	{$lang->error_with_no_result}
+	<!--@end-->
+</div>

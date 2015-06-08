@@ -1,0 +1,35 @@
+<include target="_header.html" />
+<include cond="$video!=false" target="_peruse.html" />
+<table>
+	<thead>
+		<tr>
+			<th class="browse_thumbnail">{$lang->thumbnail}</th>
+			<th class="browse_title">{$lang->title}</th>
+			<th class="browse_channel">{$lang->channel}</th>
+			<th class="browse_date">{$lang->date}</th>
+		</tr>
+	</thead>
+	<tbody>
+<!--@foreach($videos as $key=>$val)-->
+	<!--@if(is_numeric($key))-->
+		<tr>
+			<td class="browse_thumbnail"><a href="{$val[url]}"><img src="{$val[snippet][thumbnails][high][url]}" /></a></td>
+			<td class="browse_title"><a href="{$val[url]}">{$val[snippet][title]}</a></td>
+			<td class="browse_channel">{$val[snippet][channelTitle]}</td>
+			<td class="browse_date">{date("Y.m.d", $val[snippet][kst])}</td>
+		</tr>
+	<!--@end-->
+<!--@end-->
+	</tbody>
+</table>
+<!--BROWSE PAGE-->
+<div class="pages">
+	<block loop="$i=1;$i<=$totalPages;$i++">
+	<!--@if($nowPage==$i)-->
+		<strong>{$i}</strong>
+	<!--@else-->
+		<a href="/?mid={$mid}&page={$i}">{$i}</a>
+	<!--@end-->
+	</block>
+</div>
+<!--/BROWSE PAGE-->

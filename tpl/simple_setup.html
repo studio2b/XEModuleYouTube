@@ -1,0 +1,34 @@
+<form ruleset="insertBoardForBasic" id="fo_obj" class="x_form-horizontal" action="./" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="act" value="procYoutubeAdminUpdateSimpleSetup" />
+	<input type="hidden" name="mid" value="{$module_info->mid}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="admin_member" value="<!--@foreach($admin_member as $key => $val)--><!--@if($member_config->identifier == 'email_address')-->{$val->email_address},<!--@else-->{$val->user_id},<!--@end--><!--@end-->" />
+	<div class="x_control-group">
+		<label class="x_control-label" for="api_key">{$lang->api_key}</label>
+		<div class="x_controls">
+			<input type="text" name="api_key" id="api_key" value="{$module_info->api_key}" />
+			<p id="header_text_help" class="x_help-block" hidden>{$lang->about_api_key}</p>
+		</div>
+	</div>
+	<div class="x_control-group">
+		<label class="x_control-label" for="playlist_id">{$lang->playlist_id}</label>
+		<div class="x_controls">
+			<input type="text" name="playlist_id" id="playlist_id" value="{$module_info->playlist_id}" />
+			<p id="header_text_help" class="x_help-block" hidden>{$lang->about_playlist_id}</p>
+		</div>
+	</div>
+	<div class="x_control-group">
+		<label class="x_control-label" for="player_width">{$lang->player_width}</label>
+		<div class="x_controls">
+			<input type="text" name="player_width" id="player_width" value="{$module_info->player_width}" />
+			<p id="header_text_help" class="x_help-block" hidden>{$lang->about_player_width}</p>
+		</div>
+	</div>
+	<div class="x_control-group">
+		<label class="x_control-label" for="player_height">{$lang->player_height}</label>
+		<div class="x_controls">
+			<input type="text" name="player_height" id="player_height" value="{$module_info->player_height}" />
+			<p id="header_text_help" class="x_help-block" hidden>{$lang->about_player_height}</p>
+		</div>
+	</div>
+</form>

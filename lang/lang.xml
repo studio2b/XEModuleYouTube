@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lang>
+	<item name="api_key">
+		<value xml:lang="ko"><![CDATA[구글 API 키]]></value>
+		<value xml:lang="en"><![CDATA[Google API Key]]></value>
+	</item>
+	<item name="about_api_key">
+		<value xml:lang="ko"><![CDATA[구글 개발자 콘솔(https://code.google.com/apis/console)에서 API 키를 발급 받아 입력하십시오. API 키를 입력하지 않으면 사용이 제한됩니다.]]></value>
+		<value xml:lang="en"><![CDATA[You should input a API Key you can get from Google Dev. Console(https://code.google.com/apis/console). If you don"t input a API Key, you can be banned to access YouTube.]]></value>
+	</item>
+	<item name="playlist_id">
+		<value xml:lang="ko"><![CDATA[채널/재생목록 아이디]]></value>
+		<value xml:lang="en"><![CDATA[Playlist ID]]></value>
+	</item>
+	<item name="about_playlist_id">
+		<value xml:lang="ko"><![CDATA[채널 또는 재생목록의 아이디입니다. 채널 아이디의 경우 "youtube.com/[채널 아이디]" 또는 "youtube.com/user/[채널 아이디]"로 나타납니다. 재생목록 아이디의 경우 URL에서 "youtube.com/playlist?list=아이디"의 형식으로 나타납니다.]]></value>
+		<value xml:lang="en"><![CDATA[It"s ID of a playlist. It"s found in the playlist"s URL(youtube.com/playlist?list=[id]).]]></value>
+	</item>
+	<item name="player_width">
+		<value xml:lang="ko"><![CDATA[플레이어 가로 길이]]></value>
+		<value xml:lang="en"><![CDATA[A width of player]]></value>
+	</item>
+	<item name="about_player_width">
+		<value xml:lang="ko"><![CDATA[보기 화면에서의 플레이어 가로 폭 길이입니다.]]></value>
+		<value xml:lang="en"><![CDATA[It"s a width of player in a view page]]></value>
+	</item>
+	<item name="player_height">
+		<value xml:lang="ko"><![CDATA[플레이어 세로 길이]]></value>
+		<value xml:lang="en"><![CDATA[A height of player]]></value>
+	</item>
+	<item name="about_player_height">
+		<value xml:lang="ko"><![CDATA[보기 화면에서의 플레이어 세로 폭 길이입니다. 지정하지 않으면 4:3 비율로 자동 조정됩니다.]]></value>
+		<value xml:lang="en"><![CDATA[It"s a height of a player in a view page.]]></value>
+	</item>
+	
+	<!--Browse-->
+	<item name="thumbnail">
+		<value xml:lang="ko"><![CDATA[미리보기]]></value>
+		<value xml:lang="en"><![CDATA[Thumbnail]]></value>
+	</item>
+	<item name="title">
+		<value xml:lang="ko"><![CDATA[제목]]></value>
+		<value xml:lang="en"><![CDATA[Title]]></value>
+	</item>
+	<item name="channel">
+		<value xml:lang="ko"><![CDATA[글쓴이]]></value>
+		<value xml:lang="en"><![CDATA[Channel]]></value>
+	</item>
+	<item name="date">
+		<value xml:lang="ko"><![CDATA[날짜]]></value>
+		<value xml:lang="en"><![CDATA[Date]]></value>
+	</item>
+	
+	<!--error-->
+	<item name="error">
+		<value xml:lang="ko"><![CDATA[오류]]></value>
+		<value xml:lang="en"><![CDATA[Error]]></value>
+	</item>
+	<item name="error_with_no_result">
+		<value xml:lang="ko"><![CDATA[조회 중 오류가 발생했습니다. 요청한 ID 값이 잘못되었거나, 입력한 API 키가 올바르지 않을 수 있습니다.]]></value>
+		<value xml:lang="en"><![CDATA[An error is occured. There are some reasons because of ID value, API Key and so on.]]></value>
+	</item>
+</lang>
