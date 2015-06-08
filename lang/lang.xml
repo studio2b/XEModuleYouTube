@@ -16,6 +16,14 @@
 		<value xml:lang="ko"><![CDATA[채널 또는 재생목록의 아이디입니다. 채널 아이디의 경우 "youtube.com/[채널 아이디]" 또는 "youtube.com/user/[채널 아이디]"로 나타납니다. 재생목록 아이디의 경우 URL에서 "youtube.com/playlist?list=아이디"의 형식으로 나타납니다.]]></value>
 		<value xml:lang="en"><![CDATA[It"s ID of a playlist. It"s found in the playlist"s URL(youtube.com/playlist?list=[id]).]]></value>
 	</item>
+	<item name="list_count">
+		<value xml:lang="ko"><![CDATA[목록 수]]></value>
+		<value xml:lang="en"><![CDATA[The number of list items]]></value>
+	</item>
+	<item name="about_youtube_list_count">
+		<value xml:lang="ko"><![CDATA[한 페이지에 표시될 동영상 수를 지정할 수 있습니다.(기본 20개, 최대 50개)]]></value>
+		<value xml:lang="en"><![CDATA[It's the number of items.(Max 50)]]></value>
+	</item>
 	<item name="player_width">
 		<value xml:lang="ko"><![CDATA[플레이어 가로 길이]]></value>
 		<value xml:lang="en"><![CDATA[A width of player]]></value>
@@ -49,6 +57,14 @@
 	<item name="date">
 		<value xml:lang="ko"><![CDATA[날짜]]></value>
 		<value xml:lang="en"><![CDATA[Date]]></value>
+	</item>
+	<item name="first_page">
+		<value xml:lang="ko"><![CDATA[첫 페이지]]></value>
+		<value xml:lang="en"><![CDATA[First page]]></value>
+	</item>
+	<item name="last_page">
+		<value xml:lang="ko"><![CDATA[마지막 페이지]]></value>
+		<value xml:lang="en"><![CDATA[Last page]]></value>
 	</item>
 	
 	<!--error-->

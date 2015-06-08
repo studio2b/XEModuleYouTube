@@ -15,7 +15,7 @@
 		<tr>
 			<td class="browse_thumbnail"><a href="{$val[url]}"><img src="{$val[snippet][thumbnails][high][url]}" /></a></td>
 			<td class="browse_title"><a href="{$val[url]}">{$val[snippet][title]}</a></td>
-			<td class="browse_channel">{$val[snippet][channelTitle]}</td>
+			<td class="browse_channel"><a href="{$val[channelUrl]}" target="_blank">{$val[snippet][channelTitle]}</a></td>
 			<td class="browse_date">{date("Y.m.d", $val[snippet][kst])}</td>
 		</tr>
 	<!--@end-->
@@ -24,12 +24,11 @@
 </table>
 <!--BROWSE PAGE-->
 <div class="pages">
-	<block loop="$i=1;$i<=$totalPages;$i++">
-	<!--@if($nowPage==$i)-->
-		<strong>{$i}</strong>
-	<!--@else-->
-		<a href="/?mid={$mid}&page={$i}">{$i}</a>
-	<!--@end-->
+	<a href="{getNotEncodedUrl('','mid',$mid)}"><i class="xi-angle-left"></i>&nbsp;{$lang->first_page}</a>
+	<block loop="$i=$startPage;$i<=$endPage;$i++">
+		<strong cond="$nowPage==$i">{$i}</strong>
+		<a cond="$nowPage!=$i" href="{getNotEncodedUrl('','mid',$mid,'page',$i)}">{$i}</a>
 	</block>
+	<a href="{getNotEncodedUrl('','mid',$this->mid,'page',$totalPages)}">{$lang->last_page}&nbsp;<i class="xi-angle-right"></i></a>
 </div>
 <!--/BROWSE PAGE-->

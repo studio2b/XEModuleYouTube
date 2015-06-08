@@ -36,7 +36,7 @@
 		<action name="procYoutubeAdminUpdateSimpleSetup" type="controller" />
 		
 		<!--View-->
-		<action name="dispYoutubeDisplay" type="view" standalone="true" index="true" />
+		<action name="dispYoutubeBrowse" type="view" standalone="true" index="true" />
 		<!--Controller-->
 		
 	</actions>

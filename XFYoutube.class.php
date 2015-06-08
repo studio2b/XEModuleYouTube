@@ -5,7 +5,8 @@
 //Studio2b(www.studio2b.kr)
 //Michael Son(mson0129@gmail.com)
 //02DEC2014(1.0.0.) - Newly added.
-//07JUN2015(1.0.0.) - Ported for XpressEngine
+//07JUN2015(1.1.0.) - It's ported for XpressEngine. And getPlaylistItems is added.
+//08JUN2015(1.2.0.) - getPage is added.
 class XFYoutube {
 	var $token;
 	var $activities, $channels, $playlists, $playlistItmes;
@@ -22,14 +23,14 @@ class XFYoutube {
 	function getChannelPlaylists($categoryId=NULL, $forUsername=NULL, $id=NULL, $managedByMe=NULL) {
 		if(!is_null($categoryId) || !is_null($forUsername) || !is_null($id) || !is_null($managedByMe)) {
 			//Get channel Info. and a recents playlist.
-			$channel = $this->channels->lists("id,contentDetails", $categoryId, $forUsername, $id, $managedByMe);
+			$channel = $this->channels->browse("id,contentDetails", $categoryId, $forUsername, $id, $managedByMe);
 			$return[0][id] = $channel[items][0][contentDetails][relatedPlaylists][uploads];
 			$return[0][title] = "[=recents]";
 			$return[0][channelId] = $channel[items][0][id];
 			$channelId = $channel[items][0][id];
 			//Get playlists
 			while(true) {
-				$playlists = $this->playlists->lists(null, $channelId, null, null, 50, null, null, $pageToken);
+				$playlists = $this->playlists->browse(null, $channelId, null, null, 50, null, null, $pageToken);
 				$pos = count($return);
 				foreach($playlists[items] as $key => $value) {
 					$return[$key+$pos][id] = $value[id];
@@ -60,7 +61,7 @@ class XFYoutube {
 				$result = $this->playlistItems->browse(NULL, NULL, $playlistId, $items, $result[nextPageToken]);
 				if($result===false) {
 					//If it is not a playlist ID, it may be a channel name. 
-					$channel = $this->channels->lists("id,contentDetails", NULL, $playlistId);
+					$channel = $this->channels->browse("id,contentDetails", NULL, $playlistId);
 					$playlistId = $channel[items][0][contentDetails][relatedPlaylists][uploads];
 					$result = $this->playlistItems->browse(NULL, NULL, $playlistId, $items, $result[nextPageToken]);
 					if($result===false) {
@@ -77,5 +78,37 @@ class XFYoutube {
 		}
 		return $return;
 	}
+	
+	function getPosition($playlistId, $videoId) {
+		if(!is_null($playlistId) && !is_null($videoId)) {
+			$counter = 0;
+			while(true) {
+				$result = $this->playlistItems->browse(NULL, NULL, $playlistId, 50, $result[nextPageToken]);
+				if($result===false) {
+					$return = false;
+					break;
+				} else {
+					foreach($result[items] as $val) {
+						$counter++;
+						if($videoId==$val[contentDetails][videoId]) {
+							$return = $counter;
+							break;
+						}
+					}
+				}
+				
+				if(is_numeric($return)) {
+					break;
+				} else if(is_null($result[nextPageToken])) {
+					$return = false;
+					break;
+				}
+			}
+		} else {
+			$return = false;
+		}
+		
+		return $return;
+	} 
 }
 ?>

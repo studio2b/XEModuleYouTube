@@ -3,7 +3,7 @@
 	<div class="peruse_header">
 		<h1 class="peruse_title"><a href="{$video[url]}">{$video[snippet][title]}</a></h1>
 		<p class="peruse_meta">
-			<span class="peruse_channel">{$video[snippet][channelTitle]}</span>
+			<span class="peruse_channel"><a href="{$video[channelUrl]}" target="_blank">{$video[snippet][channelTitle]}</a></span>
 			<span class="peruse_date">{date("Y-m-d h:i:s", $video[snippet][kst])}</span>
 		</p>
 	</div>

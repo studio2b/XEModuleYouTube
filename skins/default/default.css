@@ -26,6 +26,7 @@ div.peruse_header{margin-bottom: 20px;}
 	h1.peruse_title {font-size: 21px; font-weight: 400; line-height: 36px; white-space: nowrap;}
 		h1.peruse_title a {color: #444; text-decoration: none;}
 	p.peruse_meta {margin: 0; padding: 8px 0 13px; border-bottom: 1px solid #DDD; zoom: 1; white-space: nowrap; color: #666;}
+		p.peruse_meta span.peruse_channel a {color: #666; text-decoration: none;}
 
 div.peruse_contents {padding: 15px 10px;}
 	div.peruse_player {padding-bottom: 15px; text-align: center;}

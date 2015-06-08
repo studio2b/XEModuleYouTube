@@ -26,7 +26,7 @@ class XFYoutubeChannels {
 		}
 	}
 	
-	function lists($part, $categoryId=NULL, $forUsername=NULL, $id=NULL, $managedByMe=NULL, $mine=NULL, $maxResults=5, $onBehalfOfContentOwner=NULL, $pageToken=NULL) {
+	function browse($part, $categoryId=NULL, $forUsername=NULL, $id=NULL, $managedByMe=NULL, $mine=NULL, $maxResults=5, $onBehalfOfContentOwner=NULL, $pageToken=NULL) {
 		if(!is_null($this->token) || !is_null($categoryId) || !is_null($forUsername) || !is_null($id)) {
 			//Body
 			$data[key] = $this->api_key;

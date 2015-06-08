@@ -25,7 +25,7 @@ class XFYoutubeActivities {
 		}
 	}
 	
-	function lists($part, $channelId=NULL, $home=NULL, $mine=NULL, $maxResults=5, $pageToken=NULL, $publishedAfter=NULL, $publishedBefore=NULL, $regionCode=NULL) {
+	function browse($part, $channelId=NULL, $home=NULL, $mine=NULL, $maxResults=5, $pageToken=NULL, $publishedAfter=NULL, $publishedBefore=NULL, $regionCode=NULL) {
 		//Not Tested
 		if(!is_null($this->token) || !is_null($channelId)) {
 			//Essential

@@ -26,7 +26,7 @@ class XFYoutubePlaylists {
 		}
 	}
 	
-	function lists($part=NULL, $channelId=NULL, $id=NULL, $mine=NULL, $maxResults=5, $onBehalfOfContentOwner=NULL, $onBehalfOfContentOwnerChannel=NULL, $pageToken=NULL) {
+	function browse($part=NULL, $channelId=NULL, $id=NULL, $mine=NULL, $maxResults=5, $onBehalfOfContentOwner=NULL, $onBehalfOfContentOwnerChannel=NULL, $pageToken=NULL) {
 		if(!is_null($this->token) || !is_null($channelId) || !is_null($id)) {
 			$data[key] = $this->api_key;
 			if(!is_null($part)) {
