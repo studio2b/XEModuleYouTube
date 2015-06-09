@@ -8,6 +8,7 @@
 //08JUN2015(1.0.1.) - The skin bug is fixed.(It can be ouccred when the skin value of module has nothing.)
 //08JUN2015(1.1.0.) - channelUrl is supported.
 //08JUN2015(1.1.1.) - The bug are fixed(Page numbering - a user peruse a video without a page number. The number of list items - Admin cannot edit the number of items in a page.).
+//09JUL2015(1.1.2.) - Optimizing processing time
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -51,9 +52,12 @@ class youtubeView extends youtube {
 		//Page
 		$page = Context::get("page");
 		$videoId = Context::get("video_id");
+		$no = Context::get("no");
 		$videosPerPage = is_numeric($this->module_info->list_count) ? $this->module_info->list_count : 20;
 		if(!isset($page)) {
-			if(isset($videoId)){
+			if(isset($no)) {
+				$videoPosition = $no;
+			} else if(isset($videoId)){
 				$videoPosition = $youtube->getPosition($playlistId, $videoId);
 			}
 			$page = is_numeric($videoPosition) ? ceil($videoPosition/$videosPerPage) : 1;
@@ -64,7 +68,10 @@ class youtubeView extends youtube {
 		//var_dump($videos);
 		if($videos!==false) {
 			foreach($videos as $key=>$val) {
-				$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $page, "video_id", $val[contentDetails][videoId]);
+				if($this->module_info->using_video_id=="Y")
+					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $page, "video_id", $val[snippet][resourceId][videoId]);
+				else
+					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "no", ($page-1)*$videosPerPage+$key+1);
 				$videos[$key][channelUrl] = "//www.youtube.com/channel/".$val[snippet][channelId];
 			}
 		}
@@ -82,15 +89,21 @@ class youtubeView extends youtube {
 		Context::set("videos", $videos);
 		
 		//Part: Peruse
-		$video = $youtube->videos->browse(NULL, NULL, $videoId);
+		if(is_numeric($videoPosition)) {
+			$video = $videos[($videoPosition-1)%$videosPerPage];
+			$videoId = $video[snippet][resourceId][videoId];
+		} else if(isset($videoId)) {
+			$temp = $youtube->videos->browse("snippet", NULL, $videoId);
+			$video = $temp[items][0];
+		}
 		//var_dump($video);
-		if(isset($videoId)) {
-			$video[items][0][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $page, "video_id", $video[items][0][id]);
-			$video[items][0][fullUrl] = $_SERVER["HTTP_HOST"].$video[items][0][url];
-			$video[items][0][channelUrl] = "//www.youtube.com/channel/".$video[items][0][snippet][channelId];
-			Context::addBrowserTitle($video[items][0][snippet][title]);
+		if(isset($videoId) || isset($no)) {
+			$video[url] = getNotEncodedUrl("", "mid", $this->mid, "video_id", $videoId);
+			$video[fullUrl] = $_SERVER["HTTP_HOST"].$video[url];
+			$video[channelUrl] = "//www.youtube.com/channel/".$video[snippet][channelId];
+			Context::addBrowserTitle($video[snippet][title]);
 			Context::set("videoId", $videoId);
-			Context::set("video", $video[items][0]);
+			Context::set("video", $video);
 			//Player Width
 			if(is_null($this->module_info->player_width)) {
 				$playerSize[width] = 640;

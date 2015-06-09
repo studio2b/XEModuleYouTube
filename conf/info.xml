@@ -4,8 +4,8 @@
 	<title xml:lang="en">YouTube</title>
 	<description xml:lang="ko">유투브에 있는 특정 채널 또는 플레이리스트를 가져와서 보여줍니다.</description>
 	<description xml:lang="en">Get videos from a channel or a playlist.</description>
-	<version>0.1.1</version>
-	<date>2015-06-07</date>
+	<version>0.1.2</version>
+	<date>2015-06-10</date>
 	<category>utility</category>
 
 	<author email_address="mson0129@gmail.com" link="http://www.studio2b.kr/">

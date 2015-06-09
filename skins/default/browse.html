@@ -29,6 +29,6 @@
 		<strong cond="$nowPage==$i">{$i}</strong>
 		<a cond="$nowPage!=$i" href="{getNotEncodedUrl('','mid',$mid,'page',$i)}">{$i}</a>
 	</block>
-	<a href="{getNotEncodedUrl('','mid',$this->mid,'page',$totalPages)}">{$lang->last_page}&nbsp;<i class="xi-angle-right"></i></a>
+	<a href="{getNotEncodedUrl('','mid',$mid,'page',$totalPages)}">{$lang->last_page}&nbsp;<i class="xi-angle-right"></i></a>
 </div>
 <!--/BROWSE PAGE-->

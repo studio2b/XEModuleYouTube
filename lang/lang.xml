@@ -16,6 +16,14 @@
 		<value xml:lang="ko"><![CDATA[채널 또는 재생목록의 아이디입니다. 채널 아이디의 경우 "youtube.com/[채널 아이디]" 또는 "youtube.com/user/[채널 아이디]"로 나타납니다. 재생목록 아이디의 경우 URL에서 "youtube.com/playlist?list=아이디"의 형식으로 나타납니다.]]></value>
 		<value xml:lang="en"><![CDATA[It"s ID of a playlist. It"s found in the playlist"s URL(youtube.com/playlist?list=[id]).]]></value>
 	</item>
+	<item name="using_video_id">
+		<value xml:lang="ko"><![CDATA[동영상 아이디 사용]]></value>
+		<value xml:lang="en"><![CDATA[Using video ID]]></value>
+	</item>
+	<item name="about_using_video_id">
+		<value xml:lang="ko"><![CDATA[동영상 보기 시, 재생목록에서의 위치 대신 동영상 아이디를 기준으로 정보를 조회합니다. 더욱 정확하게 작동하는 방식이나, API 사용 비용(https://developers.google.com/youtube/v3/determine_quota_cost)이 증가하며 반응 속도가 느려집니다.(기본 값: 해제)]]></value>
+		<value xml:lang="en"><![CDATA[Query by Video ID, not the position of playlists. It's more accurate way. But API cost can be increasing and response time will be longer.]]></value>
+	</item>
 	<item name="list_count">
 		<value xml:lang="ko"><![CDATA[목록 수]]></value>
 		<value xml:lang="en"><![CDATA[The number of list items]]></value>

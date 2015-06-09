@@ -48,7 +48,7 @@ class XFYoutubePlaylistItems {
 			
 			$curlClass = new XFCurl("GET", $this->apiUri, $header, $data);
 			$return = json_decode($curlClass->body, true);
-			
+			//var_dump($curlClass->body);
 			if($curlClass->httpCode==200 && is_array($return)) {
 				//Timestamp
 				if(is_array($return[items])) {
