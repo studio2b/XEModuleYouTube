@@ -2,9 +2,9 @@
 <skin version="0.2">
     <title xml:lang="ko">기본</title>
     <title xml:lang="en">Default</title>
-    <description xml:lang="ko">XEDITION을 기반으로 한 스킨입니다.</description>
-    <description xml:lang="en">The skin is based on XEDITION skin of the board module.</description>
-    <version>1.0.1</version>
+    <description xml:lang="ko">XEDITION을 기반으로 한 스킨입니다. 스킨에 사용되는 변수와 관련하여서는 다음 링크를 참조해주시기 바랍니다. (https://developers.google.com/youtube/v3/docs/playlistItems?hl=ko#header_1)</description>
+    <description xml:lang="en">The skin is based on XEDITION skin of the board module. If you want to get a reference of variables, go to the following site. https://developers.google.com/youtube/v3/docs/playlistItems?hl=en#header_1</description>
+    <version>1.0.2</version>
     <date>2015-06-09</date>
     <author email_address="mson0129@gmail.com" link="http://www.studio2b.kr/">
         <name xml:lang="ko">Studio2b</name>

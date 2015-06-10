@@ -32,6 +32,13 @@
 		</div>
 	</div>
 	<div class="x_control-group">
+		<label class="x_control-label" for="using_video_id">{$lang->inverse_order}</label>
+		<div class="x_controls">
+			<input type="checkbox" name="inverse_order" id="inverse_order" value="Y" checked="checked"|cond="$module_info->inverse_order=='Y'" />
+			<p id="header_text_help" class="x_help-block">{$lang->about_inverse_order}</p>
+		</div>
+	</div>
+	<div class="x_control-group">
 		<label class="x_control-label" for="player_width">{$lang->player_width}</label>
 		<div class="x_controls">
 			<input type="text" name="player_width" id="player_width" value="{$module_info->player_width}" />

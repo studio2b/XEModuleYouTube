@@ -6,9 +6,11 @@
 //Michael Son(mson0129@gmail.com)
 //02DEC2014(1.0.0.) - Newly added.
 //07JUN2015(1.0.0.) - Ported for XpressEngine
+//11JUL2015(1.1.0.) - Modified for error msg support.
 class XFYoutubePlaylistItems {
 	var $api_key, $token, $token_type;
 	var $apiUri = "https://www.googleapis.com/youtube/v3/playlistItems";
+	var $error;
 	
 	function XFYoutubePlaylistItems($token=NULL, $api_key=NULL) {
 		$xFGoogle['token_type'] = "Bearer";
@@ -67,6 +69,7 @@ class XFYoutubePlaylistItems {
 					}
 				}
 			} else {
+				$this->error = $return[error][errors][0][reason];
 				$return = false;
 			}
 		} else {

@@ -9,6 +9,7 @@
 //08JUN2015(1.1.0.) - channelUrl is supported.
 //08JUN2015(1.1.1.) - The bug are fixed(Page numbering - a user peruse a video without a page number. The number of list items - Admin cannot edit the number of items in a page.).
 //09JUL2015(1.1.2.) - Optimizing processing time
+//11JUL2015(1.2.0.) - It's support showing playlists in invert order and an error msg.
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -63,8 +64,12 @@ class youtubeView extends youtube {
 			$page = is_numeric($videoPosition) ? ceil($videoPosition/$videosPerPage) : 1;
 		}
 		
+		if($this->module_info->inverse_order=="Y")
+			$reverse = true;
+		
 		//Get a playlist(Videos)
-		$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $page);
+		$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $page, $reverse);
+		//var_dump($youtube->error);
 		//var_dump($videos);
 		if($videos!==false) {
 			foreach($videos as $key=>$val) {
@@ -74,53 +79,58 @@ class youtubeView extends youtube {
 					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "no", ($page-1)*$videosPerPage+$key+1);
 				$videos[$key][channelUrl] = "//www.youtube.com/channel/".$val[snippet][channelId];
 			}
-		}
-		
-		//StartPage
-		$startPage = max(min($page-4, $videos[totalPages]-8), 1);
-		$endPage = min(max($page+4, 9), $videos[totalPages]);
-		
-		Context::set("nowPage", $page);
-		Context::set("startPage", $startPage);
-		Context::set("endPage", $endPage);
-		Context::set("totalPages", $videos[totalPages]);
-		Context::set("totalVideos", $videos[totalVideos]);
-		unset($videos[totalPages], $videos[totalVideos]);
-		Context::set("videos", $videos);
-		
-		//Part: Peruse
-		if(is_numeric($videoPosition)) {
-			$video = $videos[($videoPosition-1)%$videosPerPage];
-			$videoId = $video[snippet][resourceId][videoId];
-		} else if(isset($videoId)) {
-			$temp = $youtube->videos->browse("snippet", NULL, $videoId);
-			$video = $temp[items][0];
-		}
-		//var_dump($video);
-		if(isset($videoId) || isset($no)) {
-			$video[url] = getNotEncodedUrl("", "mid", $this->mid, "video_id", $videoId);
-			$video[fullUrl] = $_SERVER["HTTP_HOST"].$video[url];
-			$video[channelUrl] = "//www.youtube.com/channel/".$video[snippet][channelId];
-			Context::addBrowserTitle($video[snippet][title]);
-			Context::set("videoId", $videoId);
-			Context::set("video", $video);
-			//Player Width
-			if(is_null($this->module_info->player_width)) {
-				$playerSize[width] = 640;
-			} else {
-				$playerSize[width] = $this->module_info->player_width;
+			
+			//StartPage
+			$startPage = max(min($page-4, $youtube->totalPages-8), 1);
+			$endPage = min(max($page+4, 9), $youtube->totalPages);
+			
+			Context::set("nowPage", $page);
+			Context::set("startPage", $startPage);
+			Context::set("endPage", $endPage);
+			Context::set("totalPages", $youtube->totalPages);
+			Context::set("totalVideos", $youtube->totalVideos);
+			Context::set("videos", $videos);
+			
+			//Part: Peruse
+			if(is_numeric($videoPosition)) {
+				$video = $videos[($videoPosition-1)%$videosPerPage];
+				$videoId = $video[snippet][resourceId][videoId];
+			} else if(isset($videoId)) {
+				$temp = $youtube->videos->browse("snippet", NULL, $videoId);
+				$video = $temp[items][0];
 			}
-			//Player Height
-			if(is_null($this->module_info->player_height)) {
+			//var_dump($video);
+			if(isset($videoId) || isset($no)) {
+				$video[url] = getNotEncodedUrl("", "mid", $this->mid, "video_id", $videoId);
+				$video[fullUrl] = $_SERVER["HTTP_HOST"].$video[url];
+				$video[channelUrl] = "//www.youtube.com/channel/".$video[snippet][channelId];
+				Context::addBrowserTitle($video[snippet][title]);
+				Context::set("videoId", $videoId);
+				Context::set("video", $video);
+				//Player Width
 				if(is_null($this->module_info->player_width)) {
-					$playerSize[height] = 480;
+					$playerSize[width] = 640;
 				} else {
-					$playerSize[height] = $playerSize[width]/4*3;
+					$playerSize[width] = $this->module_info->player_width;
 				}
-			} else {
-				$playerSize[height] = $this->module_info->player_height;
+				//Player Height
+				if(is_null($this->module_info->player_height)) {
+					if(is_null($this->module_info->player_width)) {
+						$playerSize[height] = 480;
+					} else {
+						$playerSize[height] = $playerSize[width]/4*3;
+					}
+				} else {
+					$playerSize[height] = $this->module_info->player_height;
+				}
+				Context::set("videoSize", $playerSize);
 			}
-			Context::set("videoSize", $playerSize);
+		} else {
+			//ERROR MSG
+			$msg = Context::getLang($youtube->error);
+			if(!$msg) $msg = $youtube->error;
+			Context::set("error_msg", $msg);
+			$this->setTemplateFile("error");
 		}
 	}
 }
