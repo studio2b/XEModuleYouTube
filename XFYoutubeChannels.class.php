@@ -60,8 +60,9 @@ class XFYoutubeChannels {
 			$curlClass = new XFCurl("GET", $this->apiUri, $header, $data);
 			$return = json_decode($curlClass->body, true);
 			
-			if($curlClass->httpCode!=200 || !is_array($return))
+			if($curlClass->httpCode!=200 || !is_array($return)) {
 				$return = false;
+			}
 		} else {
 			$return = false;
 		}

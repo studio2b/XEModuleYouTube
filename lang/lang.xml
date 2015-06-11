@@ -10,18 +10,18 @@
 	</item>
 	<item name="playlist_id">
 		<value xml:lang="ko"><![CDATA[채널/재생목록 아이디]]></value>
-		<value xml:lang="en"><![CDATA[Playlist ID]]></value>
+		<value xml:lang="en"><![CDATA[Channel/Playlist ID]]></value>
 	</item>
 	<item name="about_playlist_id">
-		<value xml:lang="ko"><![CDATA[채널 또는 재생목록의 아이디입니다. 채널 아이디의 경우 "youtube.com/[채널 아이디]" 또는 "youtube.com/user/[채널 아이디]"로 나타납니다. 재생목록 아이디의 경우 URL에서 "youtube.com/playlist?list=아이디"의 형식으로 나타납니다.]]></value>
-		<value xml:lang="en"><![CDATA[It's ID of a playlist. It"s found in the playlist"s URL(youtube.com/playlist?list=[id]).]]></value>
+		<value xml:lang="ko"><![CDATA[채널 또는 재생목록의 아이디입니다. 채널 아이디의 경우 "youtube.com/[채널 아이디]", "youtube.com/channel/[채널 아이디]" 또는 "youtube.com/user/[채널 아이디]"로 나타납니다. 재생목록 아이디의 경우 URL에서 "youtube.com/playlist?list=[재생목록 아이디]"의 형식으로 나타납니다.]]></value>
+		<value xml:lang="en"><![CDATA[It's ID of a playlist. It's found in the playlist's URL(youtube.com/playlist?list=[playlist id]).]]></value>
 	</item>
 	<item name="using_video_id">
 		<value xml:lang="ko"><![CDATA[동영상 아이디 사용]]></value>
 		<value xml:lang="en"><![CDATA[Using video ID]]></value>
 	</item>
 	<item name="about_using_video_id">
-		<value xml:lang="ko"><![CDATA[동영상 보기 시, 재생목록에서의 위치 대신 동영상 아이디를 기준으로 정보를 조회합니다. 더욱 정확하게 작동하는 방식이나, API 사용 비용(https://developers.google.com/youtube/v3/determine_quota_cost)이 증가하며 반응 속도가 느려집니다.(기본 값: 해제)]]></value>
+		<value xml:lang="ko"><![CDATA[동영상 보기 시, 재생목록에서의 위치 대신 동영상 아이디를 기준으로 정보를 조회합니다. 더욱 정확하게 작동하는 방식이나, API 사용 비용(https://developers.google.com/youtube/v3/determine_quota_cost)이 증가하며 반응 속도가 느려집니다.(기본: 해제)]]></value>
 		<value xml:lang="en"><![CDATA[Query by Video ID, not the position of playlists. It's more accurate way. But API cost can be increasing and response time will be longer.]]></value>
 	</item>
 	<item name="list_count">
@@ -29,7 +29,7 @@
 		<value xml:lang="en"><![CDATA[The number of list items]]></value>
 	</item>
 	<item name="about_youtube_list_count">
-		<value xml:lang="ko"><![CDATA[한 페이지에 표시될 동영상 수를 지정할 수 있습니다.(기본 20개, 최대 50개)]]></value>
+		<value xml:lang="ko"><![CDATA[한 페이지에 표시될 동영상 수를 지정할 수 있습니다.(기본: 20개, 최대: 50개)]]></value>
 		<value xml:lang="en"><![CDATA[It's the number of items.(Max 50)]]></value>
 	</item>
 	<item name="inverse_order">
@@ -37,7 +37,7 @@
 		<value xml:lang="en"><![CDATA[Inverse order]]></value>
 	</item>
 	<item name="about_inverse_order">
-		<value xml:lang="ko"><![CDATA[원래 재생 목록의 역순으로 출력합니다.]]></value>
+		<value xml:lang="ko"><![CDATA[원래 재생목록의 역순으로 출력합니다. YouTube API 자체에서 역순 정렬을 지원하지 않으므로, 상당히 느리며 많은 API 비용이 사용됩니다. YouTube.com에서 재생목록에 대한 여러가지 정렬 옵션을 제공하므로, 그 방법을 먼저 사용하길 권장합니다.(기본: 해제)]]></value>
 		<value xml:lang="en"><![CDATA[Show a list in inverse order.]]></value>
 	</item>
 	<item name="player_width">
@@ -99,6 +99,14 @@
 	<item name="playlistNotFound">
 		<value xml:lang="ko"><![CDATA[지정한 채널 또는 재생목록을 찾을 수 없습니다.]]></value>
 		<value xml:lang="en"><![CDATA[The playlist not found]]></value>
+	</item>
+	<item name="END_OF_LIST">
+		<value xml:lang="ko"><![CDATA[리스트에 있는 항목 수를 초과하여 데이터를 요청하였습니다.]]></value>
+		<value xml:lang="en"><![CDATA[Data requested over the number of videos in the list.]]></value>
+	</item>
+	<item name="NO_PLAYLIST_ID">
+		<value xml:lang="ko"><![CDATA[채널 또는 재생목록 아이디가 입력되지 않았습니다.]]></value>
+		<value xml:lang="en"><![CDATA[Got no channel or playlist id]]></value>
 	</item>
 	<item name="error_with_no_result">
 		<value xml:lang="ko"><![CDATA[조회 중 오류가 발생했습니다. 요청한 ID 값이 잘못되었거나, 입력한 API 키가 올바르지 않을 수 있습니다.]]></value>

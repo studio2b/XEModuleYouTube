@@ -9,6 +9,8 @@
 //08JUN2015(1.2.0.) - getPage is added.
 //09JUN2015(1.2.1.) - API Costs(https://developers.google.com/youtube/v3/determine_quota_cost) are optimized.
 //11JUL2015(1.3.0.) - It's support showing playlists in invert order and an error msg.
+//11JUL2015(1.3.1.) - List error when a playlist get by channel id or username was corrected.
+//11JUL2015(1.3.2.) - Paging error when there is a unlisted or private video in a playlist was corrected.
 class XFYoutube {
 	var $token;
 	var $activities, $channels, $playlists, $playlistItmes;
@@ -59,24 +61,25 @@ class XFYoutube {
 		if(!is_numeric($page))
 			$page = 1;
 		
-		//Brand New Code
 		if(!is_null($playlistId)) {
 			$loop=0;
 			while(true) {
 				$result = $this->playlistItems->browse("snippet", NULL, $playlistId, 50, $result[nextPageToken]);
 				if($result===false) {
 					$channel = $this->channels->browse("contentDetails", NULL, $playlistId);
-					$playlistId = $channel[items][0][contentDetails][relatedPlaylists][uploads];
-					$result = $this->playlistItems->browse("snippet", NULL, $playlistId, $pageItems[$i], $result[nextPageToken]);
-					if($result===false) {
+					if($channel===false || is_null($channel[items][0][contentDetails][relatedPlaylists][uploads])) {
 						$channel = $this->channels->browse("contentDetails", NULL, NULL, $playlistId);
-						$playlistId = $channel[items][0][contentDetails][relatedPlaylists][uploads];
-						$result = $this->playlistItems->browse("snippet", NULL, $playlistId, $pageItems[$i], $result[nextPageToken]);
-						if($result===false) {
+						if($channel===false || is_null($channel[items][0][contentDetails][relatedPlaylists][uploads])) {
 							$this->error = $this->playlistItems->error;
 							$return = false;
 							break;
+						} else {
+							$playlistId = $channel[items][0][contentDetails][relatedPlaylists][uploads];
+							$result = $this->playlistItems->browse("snippet", NULL, $playlistId, 50, $result[nextPageToken]);
 						}
+					} else {
+						$playlistId = $channel[items][0][contentDetails][relatedPlaylists][uploads];
+						$result = $this->playlistItems->browse("snippet", NULL, $playlistId, 50, $result[nextPageToken]);
 					}
 				}
 				
@@ -84,7 +87,15 @@ class XFYoutube {
 					$videos[$loop*50+$key] = $val;
 				}
 				
-				if($loop*50+count($result[items])>=($page-1)*$items && $reverse!=true) {
+				if(is_null($result[nextPageToken])) {
+					$result[pageInfo][totalResults] = count($videos);
+					$page = min($page, ceil($result[pageInfo][totalResults]/$items));
+				} else if($reverse) {
+					$result[pageInfo][totalResults] = $this->getTotalVideos($playlistId);
+					$page = min($page, ceil($result[pageInfo][totalResults]/$items));
+				}
+				
+				if($loop*50+count($result[items])>($page-1)*$items && $reverse!=true) {
 					for($i=($page-1)*$items; $i<$page*$items; $i++) {
 						if($videos[$i]==NULL) break;
 						$return[] = $videos[$i];
@@ -96,16 +107,17 @@ class XFYoutube {
 						$return[] = $videos[$i];
 					}
 					break;
-				} else if($loop*50+count($result[items])>=$result[pageInfo][totalResults]) {
+				} else if(is_null($result[nextPageToken])){
 					$this->error = "END_OF_LIST";
+					$return = false;
 					break;
 				} else {
 					$loop++;
 				}
 			}
 			
-			$this->totalPages = ceil($result[pageInfo][totalResults]/$items);
 			$this->totalVideos = $result[pageInfo][totalResults];
+			$this->totalPages = ceil($this->totalVideos/$items);
 		} else {
 			$this->error = "NO_PLAYLIST_ID";
 			$return = false;
@@ -114,58 +126,15 @@ class XFYoutube {
 		return $return;
 	}
 	
-	/*Orig
-	function getPlaylistItems($playlistId, $items=20, $page=1) {
-		//Default values
-		if(!is_numeric($items))
-			$items = 20;
-		if(!is_numeric($page))
-			$page = 1;
-		
-		$loop = ceil($items*$page/50);
-		for($i=0;$i<$loop;$i++) {
-			if($i==$loop-1) {
-				 if($items*$page-($loop-1)*50<$items) {
-				 	$pageItems[$i] = $items;
-				 	if($i>0) {
-				 		$pageItems[$i-1] -= $items-($items*$page-($loop-1)*50);
-				 	}
-				 } else {
-				 	$pageItems[$i] = $items*$page-($loop-1)*50;
-				 }
-			} else {
-				$pageItems[$i] = 50;
-			}
+	function getTotalVideos($playlistId) {
+		while(true) {
+			$result = $this->playlistItems->browse("id", NULL, $playlistId, 50, $result[nextPageToken]);
+			$return += count($result[items]);
+			if(is_null($result[nextPageToken]))
+				break;
 		}
-		if(!is_null($playlistId)) {
-			for($i=0; $i<$loop; $i++) {
-				//$nowItems = $i==$loop-1 ? $lastPageItems : 50;
-				$result = $this->playlistItems->browse("snippet", NULL, $playlistId, $pageItems[$i], $result[nextPageToken]);
-				//var_dump($result);
-				if($result===false) {
-					//If it is not a playlist ID, it may be a channel name.
-					$channel = $this->channels->browse("contentDetails", NULL, $playlistId);
-					$playlistId = $channel[items][0][contentDetails][relatedPlaylists][uploads];
-					$result = $this->playlistItems->browse("snippet", NULL, $playlistId, $pageItems[$i], $result[nextPageToken]);
-					if($result===false) {
-						$return = false;
-						break;
-					}
-				}
-			}
-				
-			for($j=0; $j<min($items, count($result[items])); $j++) {
-				$return[] = $result[items][$pageItems[$loop-1]-$items+$j];
-			}
-			$return[totalPages] = ceil($result[pageInfo][totalResults]/$items);
-			$return[totalVideos] = $result[pageInfo][totalResults];
-		} else {
-			$return = false;
-		}
-		
 		return $return;
 	}
-	*/
 	
 	function getPosition($playlistId, $videoId) {
 		if(!is_null($playlistId) && !is_null($videoId)) {

@@ -10,6 +10,7 @@
 //08JUN2015(1.1.1.) - The bug are fixed(Page numbering - a user peruse a video without a page number. The number of list items - Admin cannot edit the number of items in a page.).
 //09JUL2015(1.1.2.) - Optimizing processing time
 //11JUL2015(1.2.0.) - It's support showing playlists in invert order and an error msg.
+//11JUL2015(1.2.1.) - Paging error when there is a unlisted or private video in a playlist was corrected.
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -72,6 +73,8 @@ class youtubeView extends youtube {
 		//var_dump($youtube->error);
 		//var_dump($videos);
 		if($videos!==false) {
+			$page = min($page, $youtube->totalPages);
+			
 			foreach($videos as $key=>$val) {
 				if($this->module_info->using_video_id=="Y")
 					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $page, "video_id", $val[snippet][resourceId][videoId]);

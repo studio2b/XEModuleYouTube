@@ -32,7 +32,7 @@ class XFYoutubePlaylists {
 			if(!is_null($part)) {
 				$data[part] = $part;
 			} else {
-				$data[part] = "id,snippet,status";
+				$data[part] = "id,snippet,status,contentDetails";
 			}
 			if(!is_null($channelId)) {
 				$data[channelId] = $channelId;
