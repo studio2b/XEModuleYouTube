@@ -11,10 +11,11 @@
 //11JUL2015(1.3.0.) - It's support showing playlists in invert order and an error msg.
 //11JUL2015(1.3.1.) - List error when a playlist get by channel id or username was corrected.
 //11JUL2015(1.3.2.) - Paging error when there is a unlisted or private video in a playlist was corrected.
+//19JUL2015(1.3.3.) - Paging error caused by requesting over 50 items was fixed. var $totalPage is not more available.
 class XFYoutube {
 	var $token;
 	var $activities, $channels, $playlists, $playlistItmes;
-	var $totalPages, $totalVideos, $error;
+	var $items, $totalVideos, $error;
 	
 	function XFYoutube($token=null, $apiKey) {
 		$this->activities = new XFYoutubeActivities($token, $apiKey);
@@ -95,7 +96,7 @@ class XFYoutube {
 					$page = min($page, ceil($result[pageInfo][totalResults]/$items));
 				}
 				
-				if($loop*50+count($result[items])>($page-1)*$items && $reverse!=true) {
+				if(($loop*50+count($result[items])>=($page)*$items || is_null($result[nextPageToken])) && $reverse!=true) {
 					for($i=($page-1)*$items; $i<$page*$items; $i++) {
 						if($videos[$i]==NULL) break;
 						$return[] = $videos[$i];
@@ -116,8 +117,8 @@ class XFYoutube {
 				}
 			}
 			
+			$this->items = $videos;
 			$this->totalVideos = $result[pageInfo][totalResults];
-			$this->totalPages = ceil($this->totalVideos/$items);
 		} else {
 			$this->error = "NO_PLAYLIST_ID";
 			$return = false;

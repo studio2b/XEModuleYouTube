@@ -1,0 +1,5 @@
+<table name="youtube_playlist">
+    <column name="id" type="varchar" size="255" notnull="notnull" primary_key="primary_key" />
+    <column name="total_videos" type="number" size="11" />
+    <column name="timestamp" type="number" size="14" default="0" />
+</table>

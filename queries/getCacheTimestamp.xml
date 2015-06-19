@@ -1,0 +1,17 @@
+<query id='getCacheTimestamp' action='select'>
+	<tables>
+		<table name='youtube_video' />
+	</tables>
+	<columns>
+		<column name='count(no)' alias='counter' />
+		<column name='min(timestamp)' alias='timestamp' />
+	</columns>
+	<conditions>
+		<condition operation='equal' column='id' var='id' />
+		<condition operation='more' column='no' filter='number' var='start' pipe='and' />
+		<condition operation='below' column='no' filter='number' var='end' pipe='and' />
+	</conditions>
+	<groups>
+		<group column='id' />
+	</groups>
+</query>

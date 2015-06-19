@@ -11,6 +11,7 @@
 //09JUL2015(1.1.2.) - Optimizing processing time
 //11JUL2015(1.2.0.) - It's support showing playlists in invert order and an error msg.
 //11JUL2015(1.2.1.) - Paging error when there is a unlisted or private video in a playlist was corrected.
+//19JUN2015(1.3.0.) - This module was updated for cache.
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -68,12 +69,35 @@ class youtubeView extends youtube {
 		if($this->module_info->inverse_order=="Y")
 			$reverse = true;
 		
+		//Cache
+		$cacheTime = is_numeric($this->module_info->cache_time) ? $this->module_info->cache_time : 0;
+		if($cacheTime>0) {
+			$oYoutubeModel = getModel("youtube");
+			$cacheTimestamp = $oYoutubeModel->getCacheTimestamp($playlistId, $videosPerPage, $page);
+			$temp = $oYoutubeModel->getPlaylistInfo($playlistId);
+			$totalVideos = $temp->total_videos;
+			unset($temp);
+		}
+		
 		//Get a playlist(Videos)
-		$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $page, $reverse);
-		//var_dump($youtube->error);
-		//var_dump($videos);
+		if(($cacheTimestamp->counter>=$videosPerPage || $cacheTimestamp->counter==$totalVideos-($page-1)*$videosPerPage) && $cacheTimestamp->timestamp + $cacheTime*60 >= time()) {
+			$temp = $oYoutubeModel->getCache($playlistId, $videosPerPage, $page, $reverse);
+			foreach($temp as $key=>$val) {
+				$videos[] = json_decode($val->item, true);
+			}
+			unset($temp);
+		} else {
+			$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $page, $reverse);
+			$totalVideos = $youtube->totalVideos;
+			if($videos!==false && $cacheTime>0) {
+				$oYoutubeModel->setCache($playlistId, $youtube->items);
+				$oYoutubeModel->setPlaylistInfo($playlistId, $youtube->totalVideos);
+			}
+		}
+		$totalPages = ceil($totalVideos/$videosPerPage);
+		
 		if($videos!==false) {
-			$page = min($page, $youtube->totalPages);
+			$page = min($page, $totalPages);
 			
 			foreach($videos as $key=>$val) {
 				if($this->module_info->using_video_id=="Y")
@@ -84,14 +108,14 @@ class youtubeView extends youtube {
 			}
 			
 			//StartPage
-			$startPage = max(min($page-4, $youtube->totalPages-8), 1);
-			$endPage = min(max($page+4, 9), $youtube->totalPages);
+			$startPage = max(min($page-4, $totalPages-8), 1);
+			$endPage = min(max($page+4, 9), $totalPages);
 			
 			Context::set("nowPage", $page);
 			Context::set("startPage", $startPage);
 			Context::set("endPage", $endPage);
-			Context::set("totalPages", $youtube->totalPages);
-			Context::set("totalVideos", $youtube->totalVideos);
+			Context::set("totalPages", $totalPages);
+			Context::set("totalVideos", $totalVideos);
 			Context::set("videos", $videos);
 			
 			//Part: Peruse

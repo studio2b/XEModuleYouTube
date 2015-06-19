@@ -1,0 +1,17 @@
+<query id='getCacheTimestamp' action='select'>
+	<tables>
+		<table name='youtube_video' />
+	</tables>
+	<columns>
+		<column name='*' />
+	</columns>
+	<conditions>
+		<condition operation='equal' column='id' var='id' />
+	</conditions>
+	<navigation>
+		<index var='index' default='no' order='order' />
+		<list_count var='listCount' default='20' />
+		<page_count var='pageCount' default='1' />
+		<page var='page' default='1' />
+	</navigation>
+</query>

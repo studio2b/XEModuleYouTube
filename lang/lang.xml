@@ -6,7 +6,7 @@
 	</item>
 	<item name="about_api_key">
 		<value xml:lang="ko"><![CDATA[구글 개발자 콘솔(https://code.google.com/apis/console)에서 API 키를 발급 받아 입력하십시오. API 키를 입력하지 않으면 사용이 제한됩니다.]]></value>
-		<value xml:lang="en"><![CDATA[You should input a API Key you can get from Google Dev. Console(https://code.google.com/apis/console). If you don"t input a API Key, you can be banned to access YouTube.]]></value>
+		<value xml:lang="en"><![CDATA[You should input a API Key you can get from Google Dev. Console(https://code.google.com/apis/console). If you don't input a API Key, you can be banned to access YouTube.]]></value>
 	</item>
 	<item name="playlist_id">
 		<value xml:lang="ko"><![CDATA[채널/재생목록 아이디]]></value>
@@ -31,6 +31,14 @@
 	<item name="about_youtube_list_count">
 		<value xml:lang="ko"><![CDATA[한 페이지에 표시될 동영상 수를 지정할 수 있습니다.(기본: 20개, 최대: 50개)]]></value>
 		<value xml:lang="en"><![CDATA[It's the number of items.(Max 50)]]></value>
+	</item>
+	<item name="cache_time">
+		<value xml:lang="ko"><![CDATA[캐시 새로고침 간격]]></value>
+		<value xml:lang="en"><![CDATA[Cache Refershing Interval Time]]></value>
+	</item>
+	<item name="about_cache_time">
+		<value xml:lang="ko"><![CDATA[캐시를 새로고침하는 시간 간격입니다. 단위는 분 단위입니다. 입력하지 않거나 0을 입력하면 데이터를 실시간으로 가져옵니다.(기본: 0)]]></value>
+		<value xml:lang="en"><![CDATA[It's a interval time to get refresh data. Unit is a minute. If you input 0 or nothing in this field, this module gets data in real time.]]></value>
 	</item>
 	<item name="inverse_order">
 		<value xml:lang="ko"><![CDATA[역순 정렬]]></value>
