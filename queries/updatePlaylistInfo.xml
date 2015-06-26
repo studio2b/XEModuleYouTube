@@ -1,0 +1,12 @@
+<query id='updatePlaylistInfo' action='update'>
+	<tables>
+		<table name='youtube_playlist' />
+	</tables>
+	<columns>
+		<column name='total_videos' var='totalVideos' filter='number' />
+		<column name='timestamp'  var='timestamp' filter='number' />
+	</columns>
+	<conditions>
+		<condition operation='equal' column='id' var='id' />
+	</conditions>
+</query>

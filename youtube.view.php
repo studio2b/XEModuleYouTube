@@ -12,6 +12,7 @@
 //11JUL2015(1.2.0.) - It's support showing playlists in invert order and an error msg.
 //11JUL2015(1.2.1.) - Paging error when there is a unlisted or private video in a playlist was corrected.
 //19JUN2015(1.3.0.) - This module was updated for cache.
+//26JUN2015(1.3.1.) - When cache data are crashed, read data from YouTube server NOT from cache.
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -28,7 +29,7 @@ class youtubeView extends youtube {
 		Context::set("config", $config);
 		
 		//Template
-		$tplPath = sprintf("%sskins/%s/", $this->module_path, (!is_null($this->module_info->skin) && $this->module_info->skin=="" && is_dir(sprintf("%sskins/%s/", $this->module_path, $this->module_info->skin))) ? $this->module_info->skin : "default");
+		$tplPath = sprintf("%sskins/%s/", $this->module_path, (!is_null($this->module_info->skin) && $this->module_info->skin!="" && is_dir(sprintf("%sskins/%s/", $this->module_path, $this->module_info->skin))) ? $this->module_info->skin : "default");
 		$this->setTemplatePath($tplPath);
 		$tplFile = strtolower(str_replace("dispYoutube", "", $this->act));
 		$this->setTemplateFile($tplFile);
@@ -80,7 +81,7 @@ class youtubeView extends youtube {
 		}
 		
 		//Get a playlist(Videos)
-		if(($cacheTimestamp->counter>=$videosPerPage || $cacheTimestamp->counter==$totalVideos-($page-1)*$videosPerPage) && $cacheTimestamp->timestamp + $cacheTime*60 >= time()) {
+		if(($cacheTimestamp->counter>=$videosPerPage || $cacheTimestamp->counter==$totalVideos-($page-1)*$videosPerPage) && $cacheTimestamp->timestamp + $cacheTime*60 >= time() && !empty($totalVideos)) {
 			$temp = $oYoutubeModel->getCache($playlistId, $videosPerPage, $page, $reverse);
 			foreach($temp as $key=>$val) {
 				$videos[] = json_decode($val->item, true);

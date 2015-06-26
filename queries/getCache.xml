@@ -1,4 +1,4 @@
-<query id='getCacheTimestamp' action='select'>
+<query id='getCache' action='select'>
 	<tables>
 		<table name='youtube_video' />
 	</tables>

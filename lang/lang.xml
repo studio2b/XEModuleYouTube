@@ -1,11 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lang>
+	<!--Common-->
+	<item name="youtube">
+		<value xml:lang="ko"><![CDATA[유튜브]]></value>
+		<value xml:lang="en"><![CDATA[YouTube]]></value>
+	</item>
+	<item name="youtube_insert">
+		<value xml:lang="ko"><![CDATA[새로 만들기]]></value>
+		<value xml:lang="en"><![CDATA[Insert]]></value>
+	</item>
+	<item name="youtube_browse">
+		<value xml:lang="ko"><![CDATA[목록 보기]]></value>
+		<value xml:lang="en"><![CDATA[Browse]]></value>
+	</item>
+	<item name="youtube_peruse">
+		<value xml:lang="ko"><![CDATA[자세히 보기]]></value>
+		<value xml:lang="en"><![CDATA[Peruse]]></value>
+	</item>
+	<item name="youtube_update">
+		<value xml:lang="ko"><![CDATA[고치기]]></value>
+		<value xml:lang="en"><![CDATA[Update]]></value>
+	</item>
+	<item name="youtube_delete">
+		<value xml:lang="ko"><![CDATA[지우기]]></value>
+		<value xml:lang="en"><![CDATA[Delete]]></value>
+	</item>
+	<item name="youtube_copy">
+		<value xml:lang="ko"><![CDATA[베끼기]]></value>
+		<value xml:lang="en"><![CDATA[Copy]]></value>
+	</item>
+	<item name="youtube_cancel">
+		<value xml:lang="ko"><![CDATA[그만두기]]></value>
+		<value xml:lang="en"><![CDATA[Cancel]]></value>
+	</item>
+
+	<!--Admin: Browse-->
+	<item name="youtube_menu_management">
+		<value xml:lang="ko"><![CDATA[유튜브 메뉴 관리]]></value>
+		<value xml:lang="en"><![CDATA[YouTube Module Management]]></value>
+	</item>
+	<item name="about_youtube_module">
+		<value xml:lang="ko"><![CDATA[유튜브 모듈을 사용하는 메뉴(모듈 인스턴스)들을 관리합니다.]]></value>
+		<value xml:lang="en"><![CDATA[Manage menus(module instances) using YouTube module.]]></value>
+	</item>
+	
+	<item name="youtube_browse_menus">
+		<value xml:lang="ko"><![CDATA[유튜브 메뉴 목록 보기]]></value>
+		<value xml:lang="en"><![CDATA[Browse menus of YouTube module]]></value>
+	</item>
+	
+	<item name="youtube_menu_category">
+		<value xml:lang="ko"><![CDATA[메뉴 카테고리]]></value>
+		<value xml:lang="en"><![CDATA[Menu Category]]></value>
+	</item>
+	<item name="youtube_menu_id">
+		<value xml:lang="ko"><![CDATA[메뉴 아이디]]></value>
+		<value xml:lang="en"><![CDATA[Menu ID]]></value>
+	</item>
+	<item name="youtube_about_menu_id">
+		<value xml:lang="ko"><![CDATA[메뉴 아이디는 http://주소/?mid=[메뉴 아이디] 처럼 직접 호출할 수 있는 값입니다. (영문+[영문+숫자+_] 만 가능. 최대 40 글자)]]></value>
+		<value xml:lang="en"><![CDATA[Menu ID is the value to call a menu directly.]]></value>
+	</item>
+	<item name="youtube_insert_menu">
+		<value xml:lang="ko"><![CDATA[메뉴 새로 만들기]]></value>
+		<value xml:lang="en"><![CDATA[Insert a menu]]></value>
+	</item>
+	<item name="youtube_manage_selected_menu">
+		<value xml:lang="ko"><![CDATA[골라낸 메뉴 고치기(지원 예정)]]></value>
+		<value xml:lang="en"><![CDATA[Manage selected menus(N/A)]]></value>
+	</item>
+	
+	<!--Admin: Update-->
+	<item name="youtube_update_menu">
+		<value xml:lang="ko"><![CDATA[유튜브 메뉴 업데이트]]></value>
+		<value xml:lang="en"><![CDATA[Update YouTube Menus]]></value>
+	</item>
+	<item name="youtube_menu_commons">
+		<value xml:lang="ko"><![CDATA[메뉴(모듈 인스턴스) 공통]]></value>
+		<value xml:lang="en"><![CDATA[Common things of a menu(module instance)]]></value>
+	</item>
+	<item name="mlayout">
+		<value xml:lang="ko"><![CDATA[레이아웃(모바일)]]></value>
+		<value xml:lang="en"><![CDATA[Layout(Mobile)]]></value>
+	</item>
+	<item name="mskin">
+		<value xml:lang="ko"><![CDATA[스킨(모바일)]]></value>
+		<value xml:lang="en"><![CDATA[Skin(Mobile)]]></value>
+	</item>
+	<item name="using_mskin">
+		<value xml:lang="ko"><![CDATA[모바일 스킨 사용하기]]></value>
+		<value xml:lang="en"><![CDATA[Using a skin for mobile.]]></value>
+	</item>
+	<item name="youtube_essentials">
+		<value xml:lang="ko"><![CDATA[필수]]></value>
+		<value xml:lang="en"><![CDATA[Essentials]]></value>
+	</item>
+	<item name="youtube_view">
+		<value xml:lang="ko"><![CDATA[보기]]></value>
+		<value xml:lang="en"><![CDATA[View]]></value>
+	</item>
+	<item name="youtube_performance">
+		<value xml:lang="ko"><![CDATA[성능]]></value>
+		<value xml:lang="en"><![CDATA[Performance]]></value>
+	</item> 
+	
+	<!--SimpleSetup-->
 	<item name="api_key">
 		<value xml:lang="ko"><![CDATA[구글 API 키]]></value>
 		<value xml:lang="en"><![CDATA[Google API Key]]></value>
 	</item>
 	<item name="about_api_key">
-		<value xml:lang="ko"><![CDATA[구글 개발자 콘솔(https://code.google.com/apis/console)에서 API 키를 발급 받아 입력하십시오. API 키를 입력하지 않으면 사용이 제한됩니다.]]></value>
+		<value xml:lang="ko"><![CDATA[<a href='//code.google.com/apis/console' target='_blank'>구글 개발자 콘솔</a>에서 API 키를 발급 받아 입력하십시오. API 키를 입력하지 않으면 사용이 제한됩니다.]]></value>
 		<value xml:lang="en"><![CDATA[You should input a API Key you can get from Google Dev. Console(https://code.google.com/apis/console). If you don't input a API Key, you can be banned to access YouTube.]]></value>
 	</item>
 	<item name="playlist_id">
@@ -63,6 +168,19 @@
 	<item name="about_player_height">
 		<value xml:lang="ko"><![CDATA[보기 화면에서의 플레이어 세로 폭 길이입니다. 지정하지 않으면 4:3 비율로 자동 조정됩니다.]]></value>
 		<value xml:lang="en"><![CDATA[It's a height of a player in a view page.]]></value>
+	</item>
+	
+	<item name="youtube_get_info">
+		<value xml:lang="ko"><![CDATA[모듈 정보 보기]]></value>
+		<value xml:lang="en"><![CDATA[Get info]]></value>
+	</item>
+	<item name="youtube_go_forum">
+		<value xml:lang="ko"><![CDATA[질문/의견]]></value>
+		<value xml:lang="en"><![CDATA[Go to the forum]]></value>
+	</item>
+	<item name="youtube_advanced_setting">
+		<value xml:lang="ko"><![CDATA[자세히 고치기]]></value>
+		<value xml:lang="en"><![CDATA[Advanced Setting]]></value>
 	</item>
 	
 	<!--Browse-->

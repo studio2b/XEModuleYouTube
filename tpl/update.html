@@ -1,0 +1,183 @@
+<include target="./_header.html" />
+<h2>
+	<i class='xi-cog'></i> {$lang->youtube_update_menu} &gt;
+	<a href="{getSiteUrl($module_info->domain,'','mid',$module_info->mid)}" target="_blank"|cond="$module=='admin'">
+		<!--@if(strpos($module_info->browser_title, '$user_lang->') === false)-->
+		{$module_info->browser_title}<!--@else-->{htmlspecialchars($module_info->browser_title)}<!--@end-->({$module_info->mid}<block cond="$module_info->is_default=='Y'">({$lang->is_default})</block>)
+	</a>
+</h2>
+<form class='x_form-horizontal' action='./' method='post' enctype='multipart/form-data'>
+	<input type="hidden" name="act" value="procYoutubeAdminUpdate" />
+	<input type="hidden" name="mid" value="{$module_info->mid}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="admin_member" value="<!--@foreach($admin_member as $key => $val)--><!--@if($member_config->identifier == 'email_address')-->{$val->email_address},<!--@else-->{$val->user_id},<!--@end--><!--@end-->" />
+	<input cond='$mid || $module_srl' type='hidden' name='success_return_url' value='{getRequestUriByServerEnviroment()}' />
+	<section class="section">
+		<h1><i class='xi-xpressengine'></i> {$lang->youtube_menu_commons}</h1>
+		<div cond="$logged_info->is_admin == 'Y'" class="x_control-group">
+			<label class="x_control-label" for="board_name"><i class='xi-db-full'></i> {$lang->youtube_menu_id}</label>
+			<div class="x_controls">
+				<input type="text" name="board_name" id="board_name" value="{$module_info->mid}" />
+				<a href="#module_name_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="module_name_help" class="x_help-block" hidden>{$lang->youtube_about_menu_id}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title"><i class='xi-layout-top'></i> {$lang->browser_title}</label>
+			<div class="x_controls">
+				<input type="text" name="browser_title" id="browser_title" value="<!--@if(strpos($module_info->browser_title, '$user_lang->') === false)-->{$module_info->browser_title}<!--@else-->{htmlspecialchars($module_info->browser_title)}<!--@end-->" class="lang_code" />
+				<a href="#browser_title_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="browser_title_help" class="x_help-block" hidden>{$lang->about_browser_title}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="layout_srl"><i class='xi-canvas'></i> {$lang->layout}</label>
+			<div class="x_controls">
+				<select name="layout_srl" id="layout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$layout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$module_info->layout_srl== $val->layout_srl">{$val->title} ({$val->layout})</option>
+				</select>
+				<a href="#layout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="layout_help" class="x_help-block" hidden>{$lang->about_layout}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="mlayout_srl"><i class='xi-canvas'></i> {$lang->mlayout}</label>
+			<div class="x_controls">
+				<select name="mlayout_srl" id="mlayout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$module_info->mlayout_srl== $val->layout_srl">{$val->title} ({$val->layout})</option>
+				</select>
+				<a href="#layout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="layout_help" class="x_help-block" hidden>{$lang->about_layout}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="skin"><i class='xi-paint-brush'></i> {$lang->skin}</label>
+			<div class="x_controls">
+				<select name="skin" id="skin" style="width:auto">
+					<option loop="$skin_list=> $key, $val" value="{$key}" selected="selected"|cond="$module_info->skin== $key || (!$module_info->skin && $key=='default')">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="mskin"><i class='xi-paint-brush'></i> {$lang->mskin}</label>
+			<div class="x_controls">
+				<select name="mskin" id="mskin">
+					<option value="0" selected="selected"|cond="$module_info->use_mobile=='Y'">{$lang->notuse}</option>
+					<option loop="$mskin_list=> $key, $val" value="{$key}" selected="selected"|cond="($module_info->mskin== $key || (!$module_info->mskin && $key=='default')) && $module_info->use_mobile=='Y'">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="list_count"><i class='xi-list-ul'></i> {$lang->list_count}</label>
+			<div class="x_controls">
+				<input type="text" name="list_count" id="list_count" value="{$module_info->list_count?$module_info->list_count:20}" style="width:30px" />
+				<p class="x_help-inline">{$lang->about_youtube_list_count}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="search_list_count"><i class='xi-magnifier'></i> {$lang->search_list_count}</label>
+			<div class="x_controls">
+				<input type="text" name="search_list_count" id="search_list_count" value="{$module_info->search_list_count?$module_info->search_list_count:20}" style="width:30px" />
+				<p class="x_help-inline">{$lang->about_search_list_count}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="page_count"><i class='xi-stack-paper'></i> {$lang->page_count}</label>
+			<div class="x_controls">
+				<input type="text" name="page_count" id="page_count" value="{$module_info->page_count?$module_info->page_count:10}" style="width:30px" />
+				<p class="x_help-inline">{$lang->about_page_count}</p>
+			</div>
+		</div>		
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_header_text"><i class='xi-upload-square'></i> {$lang->header_text}</label>
+			<div class="x_controls">
+				<textarea name="header_text" id="header_text" class="lang_code" rows="8" cols="42" placeholder="{$lang->about_header_text}"><!--@if(strpos($module_info->header_text, '$user_lang->') === false)-->{$module_info->header_text}<!--@else-->{htmlspecialchars($module_info->header_text)}<!--@end--></textarea>
+				<a href="#header_text_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="header_text_help" class="x_help-block" hidden>{$lang->about_header_text}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_footer_text"><i class='xi-download-square'></i> {$lang->footer_text}</label>
+			<div class="x_controls">
+				<textarea name="footer_text" id="footer_text" class="lang_code" rows="8" cols="42" placeholder="{$lang->about_footer_text}"><!--@if(strpos($module_info->footer_text, '$user_lang->') === false)-->{$module_info->footer_text}<!--@else-->{htmlspecialchars($module_info->footer_text)}<!--@end--></textarea>
+				<a href="#footer_text_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="footer_text_help" class="x_help-block" hidden>{$lang->about_footer_text}</p>
+			</div>
+		</div>
+	</section>
+	<section class='section'>
+		<h1><i class='xi-youtube'></i> {$lang->youtube_essentials}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="api_key"><i class='xi-key'></i> {$lang->api_key}</label>
+			<div class="x_controls">
+				<input type="text" name="api_key" id="api_key" value="{$module_info->api_key}" />
+				<a href="#api_key_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="api_key_help" class="x_help-block" hidden>{$lang->about_api_key}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="playlist_id"><i class='xi-db-pull'></i> {$lang->playlist_id}</label>
+			<div class="x_controls">
+				<input type="text" name="playlist_id" id="playlist_id" value="{$module_info->playlist_id}" />
+				<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="playlist_id_help" class="x_help-block" hidden>{$lang->about_playlist_id}</p>
+			</div>
+		</div>
+	</section>
+	<section class='section'>
+		<h1><i class='xi-eye'></i> {$lang->youtube_view}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="inverse_order"><i class='xi-lineheight-minus'></i> {$lang->inverse_order}</label>
+			<div class="x_controls">
+				<input type="checkbox" name="inverse_order" id="inverse_order" value="Y" checked="checked"|cond="$module_info->inverse_order=='Y'" />
+				<a href="#inverse_order_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="inverse_order_help" class="x_help-block" hidden>{$lang->about_inverse_order}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="player_width"><i class='xi-arrows-h'></i> {$lang->player_width}</label>
+			<div class="x_controls">
+				<input type="text" name="player_width" id="player_width" value="{$module_info->player_width}" />
+				<a href="#player_width_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="player_width_help" class="x_help-block" hidden>{$lang->about_player_width}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="player_height"><i class='xi-arrows-v'></i> {$lang->player_height}</label>
+			<div class="x_controls">
+				<input type="text" name="player_height" id="player_height" value="{$module_info->player_height}" />
+				<a href="#player_height_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="player_height_help" class="x_help-block" hidden>{$lang->about_player_height}</p>
+			</div>
+		</div>
+	</section>
+	<section class='section'>
+		<h1><i class='xi-sandwatch-mid'></i> {$lang->youtube_performance}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="using_video_id"><i class='xi-movie'></i> {$lang->using_video_id}</label>
+			<div class="x_controls">
+				<input type="checkbox" name="using_video_id" id="using_video_id" value="Y" checked="checked"|cond="$module_info->using_video_id=='Y'" />
+				<a href="#using_video_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="using_video_id_help" class="x_help-block" hidden>{$lang->about_using_video_id}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="cache_time"><i class='xi-time'></i> {$lang->cache_time}</label>
+			<div class="x_controls">
+				<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time}" />
+				<a href="#cache_time_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="cache_time_help" class="x_help-block" hidden>{$lang->about_cache_time}</p>
+			</div>
+		</div>
+	</section>
+	<div class="x_clearfix btnArea">
+		<div class="x_pull-left">
+			<a href="{getUrl('act', 'dispYoutubeAdminBrowse')}" type="button" class="x_btn"><i class='xi-arrow-left'></i> {$lang->youtube_cancel}</a>
+		</div>
+		<div class="x_pull-right">
+			<button class="x_btn x_btn-primary" type="submit"><i class='xi-pen'></i> {$lang->youtube_update}</button>
+		</div>
+	</div>
+</form>

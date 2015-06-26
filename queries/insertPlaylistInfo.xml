@@ -1,0 +1,10 @@
+<query id='insertPlaylistInfo' action='insert'>
+	<tables>
+		<table name='youtube_playlist' />
+	</tables>
+	<columns>
+		<column name='id' var='id' notnull='notnull' />
+		<column name='total_videos' var='totalVideos' filter='number' />
+		<column name='timestamp'  var='timestamp' filter='number' />
+	</columns>
+</query>

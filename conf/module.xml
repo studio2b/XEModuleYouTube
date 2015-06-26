@@ -32,7 +32,11 @@
 		<action name="getYoutubeAdminSimpleSetup" type="model" simple_setup_index="true" />
 		<!--AdminView-->
 		<action name="dispYoutubeAdminBrowse" type="view" admin_index="true" />
+		<action name="dispYoutubeAdminUpdate" type="view" />
+		<action name="dispYoutubeAdminDelete" type="view" />
 		<!--AdminController-->
+		<action name="procYoutubeAdminUpdate" type="controller" />
+		<action name="procYoutubeAdminDelete" type="controller" />
 		<action name="procYoutubeAdminUpdateSimpleSetup" type="controller" />
 		
 		<!--View-->

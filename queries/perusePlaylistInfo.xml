@@ -1,4 +1,4 @@
-<query id='getPlaylistInfo' action='select'>
+<query id='perusePlaylistInfo' action='select'>
 	<tables>
 		<table name='youtube_playlist' />
 	</tables>

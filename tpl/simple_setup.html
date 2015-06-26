@@ -1,62 +1,92 @@
-<form ruleset="insertBoardForBasic" id="fo_obj" class="x_form-horizontal" action="./" method="post" enctype="multipart/form-data">
+<style type='text/css'>
+	@import url('//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css');
+	form#fo_obj .x_icon-question-sign {width: 14px;}
+</style>
+<form id="fo_obj" class="x_form-horizontal" action="./" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="act" value="procYoutubeAdminUpdateSimpleSetup" />
 	<input type="hidden" name="mid" value="{$module_info->mid}" />
 	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
 	<input type="hidden" name="admin_member" value="<!--@foreach($admin_member as $key => $val)--><!--@if($member_config->identifier == 'email_address')-->{$val->email_address},<!--@else-->{$val->user_id},<!--@end--><!--@end-->" />
-	<div class="x_control-group">
-		<label class="x_control-label" for="api_key">{$lang->api_key}</label>
-		<div class="x_controls">
-			<input type="text" name="api_key" id="api_key" value="{$module_info->api_key}" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_api_key}</p>
+	<section class='section'>
+		<h1><i class='xi-youtube'></i> {$lang->youtube_essentials}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="api_key"><i class='xi-key'></i> {$lang->api_key}</label>
+			<div class="x_controls">
+				<input type="text" name="api_key" id="api_key" value="{$module_info->api_key}" />
+				<a href="#api_key_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="api_key_help" class="x_help-block" hidden>{$lang->about_api_key}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="playlist_id">{$lang->playlist_id}</label>
-		<div class="x_controls">
-			<input type="text" name="playlist_id" id="playlist_id" value="{$module_info->playlist_id}" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_playlist_id}</p>
+		<div class="x_control-group">
+			<label class="x_control-label" for="playlist_id"><i class='xi-db-pull'></i> {$lang->playlist_id}</label>
+			<div class="x_controls">
+				<input type="text" name="playlist_id" id="playlist_id" value="{$module_info->playlist_id}" />
+				<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="playlist_id_help" class="x_help-block" hidden>{$lang->about_playlist_id}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="using_video_id">{$lang->using_video_id}</label>
-		<div class="x_controls">
-			<input type="checkbox" name="using_video_id" id="using_video_id" value="Y" checked="checked"|cond="$module_info->using_video_id=='Y'" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_using_video_id}</p>
+	</section>
+	<section class='section'>
+		<h1><i class='xi-eye'></i> {$lang->youtube_view}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="list_count"><i class='xi-list-ul'></i> {$lang->list_count}</label>
+			<div class="x_controls">
+				<input type="text" name="list_count" id="list_count" value="{$module_info->list_count?$module_info->list_count:20}" />
+				<a href="#list_count_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="list_count_help" class="x_help-block" hidden>{$lang->about_youtube_list_count}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="list_count">{$lang->list_count}</label>
-		<div class="x_controls">
-			<input type="text" name="list_count" id="list_count" value="{$module_info->list_count}" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_youtube_list_count}</p>
+		<div class="x_control-group">
+			<label class="x_control-label" for="inverse_order"><i class='xi-lineheight-minus'></i> {$lang->inverse_order}</label>
+			<div class="x_controls">
+				<input type="checkbox" name="inverse_order" id="inverse_order" value="Y" checked="checked"|cond="$module_info->inverse_order=='Y'" />
+				<a href="#inverse_order_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="inverse_order_help" class="x_help-block" hidden>{$lang->about_inverse_order}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="cache_time">{$lang->cache_time}</label>
-		<div class="x_controls">
-			<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time}" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_cache_time}</p>
+		<div class="x_control-group">
+			<label class="x_control-label" for="player_width"><i class='xi-arrows-h'></i> {$lang->player_width}</label>
+			<div class="x_controls">
+				<input type="text" name="player_width" id="player_width" value="{$module_info->player_width}" />
+				<a href="#player_width_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="player_width_help" class="x_help-block" hidden>{$lang->about_player_width}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="using_video_id">{$lang->inverse_order}</label>
-		<div class="x_controls">
-			<input type="checkbox" name="inverse_order" id="inverse_order" value="Y" checked="checked"|cond="$module_info->inverse_order=='Y'" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_inverse_order}</p>
+		<div class="x_control-group">
+			<label class="x_control-label" for="player_height"><i class='xi-arrows-v'></i> {$lang->player_height}</label>
+			<div class="x_controls">
+				<input type="text" name="player_height" id="player_height" value="{$module_info->player_height}" />
+				<a href="#player_height_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="player_height_help" class="x_help-block" hidden>{$lang->about_player_height}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="player_width">{$lang->player_width}</label>
-		<div class="x_controls">
-			<input type="text" name="player_width" id="player_width" value="{$module_info->player_width}" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_player_width}</p>
+	</section>
+	<section class='section'>
+		<h1><i class='xi-sandwatch-mid'></i> {$lang->youtube_performance}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="using_video_id"><i class='xi-movie'></i> {$lang->using_video_id}</label>
+			<div class="x_controls">
+				<input type="checkbox" name="using_video_id" id="using_video_id" value="Y" checked="checked"|cond="$module_info->using_video_id=='Y'" />
+				<a href="#using_video_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="using_video_id_help" class="x_help-block" hidden>{$lang->about_using_video_id}</p>
+			</div>
 		</div>
-	</div>
-	<div class="x_control-group">
-		<label class="x_control-label" for="player_height">{$lang->player_height}</label>
-		<div class="x_controls">
-			<input type="text" name="player_height" id="player_height" value="{$module_info->player_height}" />
-			<p id="header_text_help" class="x_help-block">{$lang->about_player_height}</p>
+		<div class="x_control-group">
+			<label class="x_control-label" for="cache_time"><i class='xi-time'></i> {$lang->cache_time}</label>
+			<div class="x_controls">
+				<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time?$module_info->cache_time:0}" />
+				<a href="#cache_time_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="cache_time_help" class="x_help-block" hidden>{$lang->about_cache_time}</p>
+			</div>
 		</div>
+	</section>
+	<div class="x_clearfix">
+		<span class="x_pull-left">
+		<a class="x_btn modalAnchor _manage_selected" href="//www.xpressengine.com/?mid=download&package_id=22753675" target="_blank"><span><i class='xi-information-circle'></i> {$lang->youtube_get_info}</span></a>
+			<a class="x_btn modalAnchor _manage_selected" href="//www.xpressengine.com/?mid=download&package_id=22753675#forum-list" target="_blank"><span><i class='xi-unknown-circle'></i> {$lang->youtube_go_forum}</span></a>
+		</span>
+		<span class="x_pull-right">
+			<a class="x_btn modalAnchor _manage_selected" href="{getNotEncodedUrl('', 'module', 'admin', 'act', 'dispYoutubeAdminUpdate', 'module_srl', $module_info->module_srl)}"><i class='xi-cog'></i> {$lang->youtube_advanced_setting}</a>
+		</span>
 	</div>
 </form>

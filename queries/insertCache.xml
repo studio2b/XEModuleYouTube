@@ -1,0 +1,11 @@
+<query id='insertCache' action='insert'>
+	<tables>
+		<table name='youtube_video' />
+	</tables>
+	<columns>
+		<column name='id' var='id' notnull='notnull' />
+		<column name='no' var='no' filter='number' notnull='notnull' />
+		<column name='item' var='item' />
+		<column name='timestamp' var='timestamp' />
+	</columns>
+</query>

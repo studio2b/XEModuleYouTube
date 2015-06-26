@@ -1,0 +1,65 @@
+<style>
+	@import url('//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css');
+	div#youtubeSkinDeveloper {padding: 1em;}
+	h1 {font-size: 2em;}
+	h2 {margin: 5em 0 1em; font-size: 1.6em;}
+	h3 {margin: 2em 0 1em; font-size: 1.2em;}
+	ul.youtubeSkinDeveloperToc {display: initial;}
+	ul.youtubeSkinDeveloperToc li {margin: 1em 0 1em 4em;}
+	ul.youtubeSkinDeveloperToc ul > li {list-style: initial;}
+</style>
+<div id='youtubeSkinDeveloper'>
+	<h1><i class='xi-code'></i> 개발자용 스킨 &mdash; 모듈에서 제공하는 모든 변수를 확인합니다.</h1>
+	<h2><i class='xi-paper'></i> 목차</h2>
+	<ul class='youtubeSkinDeveloperToc'>
+		<li><i class='xi-db-full'></i> 모듈 정보
+		<ul>
+			<li><a href='#youtubeSkinDeveloperModuleinfo'>$module_info</a></li>
+		</ul>
+		</li>
+		<li><i class='xi-list-ul'></i> 목록
+		<ul>
+			<li><a href='#youtubeSkinDeveloperListVideos'>$videos &mdash; $video = $videos[#]</a></li>
+		</ul>
+		</li>
+		<li><i class='xi-stack-paper'></i> 페이지 네비게이션
+		<ul>
+			<li><a href='#youtubeSkinDeveloperNavigationNowpage'>$nowPage</a></li>
+			<li><a href='#youtubeSkinDeveloperNavigationTotalpage'>$totalPage</a></li>
+			<li><a href='#youtubeSkinDeveloperNavigationStartpage'>$startPage</a></li>
+			<li><a href='#youtubeSkinDeveloperNavigationEndpage'>$endPage</a></li>
+		</ul>
+		</li>
+		<li><i class='xi-globus'></i> 언어팩
+		<ul>
+			<li><a href='#youtubeSkinDeveloperLanguageLang'>$lang</a></li>
+		</ul>
+		</li>
+		<li><i class='xi-ellipsis-h'></i> 기타
+		<ul>
+			<li><a href='#youtubeSkinDeveloperETCMid'>$mid</a></li>
+		</ul>
+		</li>
+	</ul>
+	<h2><i class='xi-db-full'></i> 모듈 정보</h2>
+	<h3 id='youtubeSkinDeveloperModuleinfo'>$module_info</h3>
+	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(preg_replace("/\[(channelurl|url)\]\s\=\>\s(.*)/i", "[$1] => <a href='$2'>$2</a>", print_r($module_info, true))))}
+	<h2><i class='xi-list-ul'></i> 목록 &mdash; 키는 0부터 (목록 수-1)까지 출력합니다. 보기 화면은 목록의 배열 중 하나를 $video로 반환합니다.</h2>
+	<h3 id='youtubeSkinDeveloperListVideos'>$videos</h3>
+	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(preg_replace("/\[(channelurl|url)\]\s\=\>\s(.*)/i", "[$1] => <a href='$2'>$2</a>", print_r($videos, true))))}
+	<h2><i class='xi-stack-paper'></i> 페이지 네비게이션 &mdash; startPage부터 endPage까지 반복 출력하며 nowPage를 강조합니다.</h2>
+	<h3 id='youtubeSkinDeveloperNavigationNowpage'>$nowPage</h3>
+	= {$nowPage}
+	<h3 id='youtubeSkinDeveloperNavigationTotalpage'>$totalPage</h3>
+	= {$totalPages}
+	<h3 id='youtubeSkinDeveloperNavigationStartpage'>$startPage</h3>
+	= {$startPage}
+	<h3 id='youtubeSkinDeveloperNavigationEndpage'>$endPage</h3>
+	= {$endPage}
+	<h2><i class='xi-globus'></i> 언어팩</h2>
+	<h3 id='youtubeSkinDeveloperLanguageLang'>$lang</h3>
+	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(print_r($lang, true)))}
+	<h2><i class='xi-ellipsis-h'></i> 기타</h2>
+	<h3 id='youtubeSkinDeveloperETCMid'>$mid</h3>
+	= {$mid}
+</div>

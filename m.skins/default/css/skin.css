@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+div.youtubeMSkinDefault ul li {height: 50px; border-bottom: 1px solid #EEE; white-space: nowrap; overflow: hidden;}
+div.youtubeMSkinDefault ul li:first-child {border-top: 1px solid #EEE;}
+div.youtubeMSkinDefault ul li a {display: block; height: 50px; color: #555;}
+div.youtubeMSkinDefault ul li img {max-height: 100%; vertical-align: middle;}
+span.youtubeMSkinDefaultBrowseThumbnail {margin-right: 10px;}
+
+div.youtubeMSkinDefaultPages {padding: 15px 0; text-align: center; font-size: 1.4em;}
+div.youtubeMSkinDefaultPages a {padding: 5px; color: #555;}
+div.youtubeMSkinDefaultPages strong {padding: 5px; color: #FF9338;}
+
+div.youtubeMSkinDefaultInfo {padding: 15px;}
+div.youtubeMSkinDefaultInfo h1 {padding: 10px 0; font-size: 3em;}
+div.youtubeMSkinDefaultInfo span.youtubeMSkinDefaultInfoAuthor {padding-right: 10px; color: #555;}
+div.youtubeMSkinDefaultInfo span.youtubeMSkinDefaultInfoDate {color: #555;}
+div.youtubeMSkinDefaultInfo p.youtubeMSkinDefaultInfoDescription {padding-top: 20px; font-family: '나눔명조', '나눔 명조', 'Nanum Myeongjo', 'serif'; font-size: 1.5em; line-height: 1.5em; color: #555;}

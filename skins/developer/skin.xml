@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+	<title xml:lang="ko">개발자</title>
+	<title xml:lang="en">Developer</title>
+	<description xml:lang="ko">스킨 개발자를 위한 스킨입니다.</description>
+	<description xml:lang="en">It's the skin for skin developers.</description>
+	<version>1.0.0</version>
+	<date>2015-06-19</date>
+	<author email_address="mson0129@gmail.com" link="http://www.studio2b.kr/">
+		<name xml:lang="ko">Studio2b</name>
+		<name xml:lang="en">Studio2b</name>
+	</author>
+	<license>New BSD License</license>
+	<extra_vars>
+	</extra_vars>
+</skin>

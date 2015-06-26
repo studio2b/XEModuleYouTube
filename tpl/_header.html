@@ -1,0 +1,17 @@
+<style type='text/css'>
+	@import url('//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css');
+	h1#youtube_setting_title a:hover {text-decoration: none;}
+</style>
+<div class="x_page-header x_clearfix">
+	<span class="x_pull-left">
+		<h1 id='youtube_setting_title'>
+			<a href='{getUrl("act","dispYoutubeAdminBrowse")}'><i class='xi-youtube' style='color: #F00;'></i> {$lang->youtube_menu_management}</a>
+			<a href="#aboutModule" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+		</h1>
+	</span>
+	<span class="x_pull-right" style='padding-top: 15px;'>
+		<a class="x_btn modalAnchor _manage_selected" href="//www.xpressengine.com/?mid=download&package_id=22753675" target="_blank"><span><i class='xi-information-circle'></i> {$lang->youtube_get_info}</span></a>
+		<a class="x_btn modalAnchor _manage_selected" href="//www.xpressengine.com/?mid=download&package_id=22753675#forum-list" target="_blank"><span><i class='xi-unknown-circle'></i> {$lang->youtube_go_forum}</span></a>
+	</span>
+</div>
+<p class="x_alert x_alert-info" id="aboutModule" hidden>{$lang->about_youtube_module}</p>
