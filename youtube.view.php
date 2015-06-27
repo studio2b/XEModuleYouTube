@@ -54,19 +54,19 @@ class youtubeView extends youtube {
 		}
 		
 		//Page
-		$page = Context::get("page");
+		$nowPage = Context::get("page");
 		$videoId = Context::get("video_id");
 		$no = Context::get("no");
 		$videosPerPage = is_numeric($this->module_info->list_count) ? $this->module_info->list_count : 20;
-		if(!isset($page)) {
+		if(!isset($nowPage)) {
 			if(isset($no)) {
 				$videoPosition = $no;
 			} else if(isset($videoId)){
 				$videoPosition = $youtube->getPosition($playlistId, $videoId);
 			}
-			$page = is_numeric($videoPosition) ? ceil($videoPosition/$videosPerPage) : 1;
+			$nowPage = is_numeric($videoPosition) ? ceil($videoPosition/$videosPerPage) : 1;
 		}
-		
+		$pages = is_null($this->module_info->page_count) ? 9 : $this->module_info->page_count;
 		if($this->module_info->inverse_order=="Y")
 			$reverse = true;
 		
@@ -74,21 +74,21 @@ class youtubeView extends youtube {
 		$cacheTime = is_numeric($this->module_info->cache_time) ? $this->module_info->cache_time : 0;
 		if($cacheTime>0) {
 			$oYoutubeModel = getModel("youtube");
-			$cacheTimestamp = $oYoutubeModel->getCacheTimestamp($playlistId, $videosPerPage, $page);
+			$cacheTimestamp = $oYoutubeModel->getCacheTimestamp($playlistId, $videosPerPage, $nowPage);
 			$temp = $oYoutubeModel->getPlaylistInfo($playlistId);
 			$totalVideos = $temp->total_videos;
 			unset($temp);
 		}
 		
 		//Get a playlist(Videos)
-		if(($cacheTimestamp->counter>=$videosPerPage || $cacheTimestamp->counter==$totalVideos-($page-1)*$videosPerPage) && $cacheTimestamp->timestamp + $cacheTime*60 >= time() && !empty($totalVideos)) {
-			$temp = $oYoutubeModel->getCache($playlistId, $videosPerPage, $page, $reverse);
+		if(($cacheTimestamp->counter>=$videosPerPage || $cacheTimestamp->counter==$totalVideos-($nowPage-1)*$videosPerPage) && $cacheTimestamp->timestamp + $cacheTime*60 >= time() && !empty($totalVideos)) {
+			$temp = $oYoutubeModel->getCache($playlistId, $videosPerPage, $nowPage, $reverse);
 			foreach($temp as $key=>$val) {
 				$videos[] = json_decode($val->item, true);
 			}
 			unset($temp);
 		} else {
-			$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $page, $reverse);
+			$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $nowPage, $reverse);
 			$totalVideos = $youtube->totalVideos;
 			if($videos!==false && $cacheTime>0) {
 				$oYoutubeModel->setCache($playlistId, $youtube->items);
@@ -98,21 +98,21 @@ class youtubeView extends youtube {
 		$totalPages = ceil($totalVideos/$videosPerPage);
 		
 		if($videos!==false) {
-			$page = min($page, $totalPages);
+			$nowPage = min($nowPage, $totalPages);
 			
 			foreach($videos as $key=>$val) {
 				if($this->module_info->using_video_id=="Y")
-					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $page, "video_id", $val[snippet][resourceId][videoId]);
+					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $nowPage, "video_id", $val[snippet][resourceId][videoId]);
 				else
-					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "no", ($page-1)*$videosPerPage+$key+1);
+					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "no", ($nowPage-1)*$videosPerPage+$key+1);
 				$videos[$key][channelUrl] = "//www.youtube.com/channel/".$val[snippet][channelId];
 			}
 			
 			//StartPage
-			$startPage = max(min($page-4, $totalPages-8), 1);
-			$endPage = min(max($page+4, 9), $totalPages);
+			$startPage = max(min($nowPage-(ceil($pages/2)-1), $totalPages-($pages-1)), 1);
+			$endPage = min(max($nowPage+floor($pages/2), $pages), $totalPages);
 			
-			Context::set("nowPage", $page);
+			Context::set("nowPage", $nowPage);
 			Context::set("startPage", $startPage);
 			Context::set("endPage", $endPage);
 			Context::set("totalPages", $totalPages);
