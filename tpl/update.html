@@ -1,4 +1,35 @@
 <include target="./_header.html" />
+<script>
+var category_counter = {is_array($module_info->playlist_id) ? count($module_info->playlist_id) : 1};
+function addCategory() {
+	var groupOfCategory = document.getElementById('groupOfCategory');
+	
+	var div = document.createElement("div");
+	div.className = "x_controls";
+	
+	var categoryName = document.createElement("input");
+	categoryName.type = "text";
+	categoryName.name = "categroy_name[]";
+	categoryName.placeholder = "{$lang->youtube_category_name}";
+	
+	var categoryId = document.createElement("input");
+	categoryId.type = "text";
+	categoryId.name = "playlist_id[]";
+	categoryId.placeholder = "{$lang->playlist_id}";
+	
+	var eraser = document.createElement("a");
+	eraser.href = "javascript:document.getElementById('category"+category_counter+"').parentNode.remove();";
+	eraser.id = "category"+category_counter++;
+	eraser.innerHTML = "<i class='xi-close-circle'></i>";
+	
+	div.appendChild(categoryName);
+	div.appendChild(categoryId);
+	div.appendChild(eraser);
+	groupOfCategory.appendChild(div);
+	
+	return true;
+}
+</script>
 <h2>
 	<i class='xi-cog'></i> {$lang->youtube_update_menu} &gt;
 	<a href="{getSiteUrl($module_info->domain,'','mid',$module_info->mid)}" target="_blank"|cond="$module=='admin'">
@@ -119,9 +150,27 @@
 		</div>
 		<div class="x_control-group">
 			<label class="x_control-label" for="playlist_id"><i class='xi-db-pull'></i> {$lang->playlist_id}</label>
-			<div class="x_controls">
-				<input type="text" name="playlist_id" id="playlist_id" value="{$module_info->playlist_id}" />
-				<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+			<div id="groupOfCategory">
+				<!--@if(is_array($module_info->playlist_id))-->
+				<div class="x_controls" loop="$module_info->playlist_id=>$key,$val">
+					<input type="text" name="category_name[]" id="category_name" value="{$module_info->category_name[$key]}" placeholder="{$lang->youtube_category_name}" />
+					<input type="text" name="playlist_id[]" id="playlist_id" value="{$module_info->playlist_id[$key]}" placeholder="{$lang->playlist_id}" />
+					<!--@if($key>0)-->
+					<a href="javascript:document.getElementById('category{$key}').parentNode.remove();" id="category{$key}"><i class='xi-close-circle'></i></a>
+					<!--@else-->
+					<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<!--@end-->
+				</div>
+				<!--@else-->
+				<div class="x_controls">
+					<input type="text" name="category_name[]" id="category_name" value="{$module_info->category_name}" placeholder="{$lang->youtube->category_name}" />
+					<input type="text" name="playlist_id[]" id="playlist_id" value="{$module_info->playlist_id}" placeholder="{$lang->playlist_id}" />
+					<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				</div>
+				<!--@end-->
+			</div>
+			<div class='x_controls'>
+				<a alt='addPlaylistId' href='javascript:addCategory();'><i class='xi-plus-circle'></i></a>
 				<p id="playlist_id_help" class="x_help-block" hidden>{$lang->about_playlist_id}</p>
 			</div>
 		</div>
@@ -166,7 +215,7 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="cache_time"><i class='xi-time'></i> {$lang->cache_time}</label>
 			<div class="x_controls">
-				<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time}" />
+				<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time?$module_info->cache_time-0:10}" />
 				<a href="#cache_time_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="cache_time_help" class="x_help-block" hidden>{$lang->about_cache_time}</p>
 			</div>

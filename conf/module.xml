@@ -42,6 +42,7 @@
 		<!--View-->
 		<action name="dispYoutubeBrowse" type="view" standalone="true" index="true" />
 		<!--Controller-->
+		<action name="procYoutubeUpdateCache" type="controller" standalone="true" />
 		
 	</actions>
 	<menus>

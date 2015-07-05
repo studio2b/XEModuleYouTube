@@ -13,6 +13,8 @@
 //11JUL2015(1.2.1.) - Paging error when there is a unlisted or private video in a playlist was corrected.
 //19JUN2015(1.3.0.) - This module was updated for cache.
 //26JUN2015(1.3.1.) - When cache data are crashed, read data from YouTube server NOT from cache.
+//02JUL2015(2.0.0.) - Codes have been rewrited to apply new structure and logics.
+//05JUL2015(2.1.0.) - Category is supported.
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -43,14 +45,31 @@ class youtubeView extends youtube {
 			return new Object(-1, "msg_not_permitted");
 		}
 		
-		$youtube = new XFYoutube(NULL, $this->module_info->api_key);
+		$apiKey = $this->module_info->api_key;
+		$oYoutubeModel = getModel("youtube");
 		
 		//Playlist Default Value Setting
-		if(!isset($this->module_info->playlist_id)) {
+		if(empty($this->module_info->playlist_id)) {
 			//실시간 인기 동영상 - 한국
 			$playlistId = "PLmtapKaZsgZt3g_uAPJbsMWdkVsznn_2R";
 		} else {
-			$playlistId = $this->module_info->playlist_id;
+			if(is_array($temp = json_decode($this->module_info->playlist_id, true))) {
+				$category = Context::get("category");
+				if(is_null($category) || !array_key_exists($category, $temp))
+					$category = 0;
+				if(empty($temp[$category]))
+					$playlistId = "PLmtapKaZsgZt3g_uAPJbsMWdkVsznn_2R";
+				else
+					$playlistId = $oYoutubeModel->getRealPlaylistId($apiKey, $temp[$category]);
+				unset($temp);
+				$categoryName = json_decode($this->module_info->category_name, true);
+				Context::set("categoryName", $categoryName);
+				Context::set("category", $category);
+			} else {
+				$playlistId = $oYoutubeModel->getRealPlaylistId($apiKey, $this->module_info->playlist_id);
+			}
+			if($playlistId===false)
+				$this->dispYoutubeShowError("PLAYLISTID_IS_NOT_VALID");
 		}
 		
 		//Page
@@ -62,49 +81,37 @@ class youtubeView extends youtube {
 			if(isset($no)) {
 				$videoPosition = $no;
 			} else if(isset($videoId)){
-				$videoPosition = $youtube->getPosition($playlistId, $videoId);
+				$videoPosition = $oYoutubeModel->getPosition($apiKey, $playlistId, $videoId);
 			}
 			$nowPage = is_numeric($videoPosition) ? ceil($videoPosition/$videosPerPage) : 1;
 		}
 		$pages = is_null($this->module_info->page_count) ? 9 : $this->module_info->page_count;
-		if($this->module_info->inverse_order=="Y")
-			$reverse = true;
-		
-		//Cache
-		$cacheTime = is_numeric($this->module_info->cache_time) ? $this->module_info->cache_time : 0;
-		if($cacheTime>0) {
-			$oYoutubeModel = getModel("youtube");
-			$cacheTimestamp = $oYoutubeModel->getCacheTimestamp($playlistId, $videosPerPage, $nowPage);
-			$temp = $oYoutubeModel->getPlaylistInfo($playlistId);
-			$totalVideos = $temp->total_videos;
-			unset($temp);
+		if($this->module_info->inverse_order=="Y") {
+			$asc = false;
+			$reverse = true; //legacy
 		}
 		
-		//Get a playlist(Videos)
-		if(($cacheTimestamp->counter>=$videosPerPage || $cacheTimestamp->counter==$totalVideos-($nowPage-1)*$videosPerPage) && $cacheTimestamp->timestamp + $cacheTime*60 >= time() && !empty($totalVideos)) {
-			$temp = $oYoutubeModel->getCache($playlistId, $videosPerPage, $nowPage, $reverse);
-			foreach($temp as $key=>$val) {
-				$videos[] = json_decode($val->item, true);
-			}
-			unset($temp);
-		} else {
-			$videos = $youtube->getPlaylistItems($playlistId, $videosPerPage, $nowPage, $reverse);
-			$totalVideos = $youtube->totalVideos;
-			if($videos!==false && $cacheTime>0) {
-				$oYoutubeModel->setCache($playlistId, $youtube->items);
-				$oYoutubeModel->setPlaylistInfo($playlistId, $youtube->totalVideos);
-			}
+		//updateCache
+		$oYoutubeController = getController("youtube");
+		$cacheTime = is_numeric($this->module_info->cache_time) ? ($this->module_info->cache_time-0) : 10;
+		$updater = $oYoutubeController->procYoutubeUpdateCache($this->module_info->api_key, $playlistId, $cacheTime, $videosPerPage, $nowPage, $asc);
+		$totalVideos = $updater->totalVideos;
+		//getCacheData
+		$temp = $oYoutubeModel->getCaches($playlistId, $videosPerPage, $nowPage, $reverse);
+		foreach($temp as $key=>$val) {
+			$videos[] = json_decode($val->item, true);
 		}
+		
 		$totalPages = ceil($totalVideos/$videosPerPage);
 		
-		if($videos!==false) {
+		if($videos!==false || !is_array($videos)) {
 			$nowPage = min($nowPage, $totalPages);
 			
 			foreach($videos as $key=>$val) {
 				if($this->module_info->using_video_id=="Y")
-					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $nowPage, "video_id", $val[snippet][resourceId][videoId]);
+					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $nowPage, "category", $category, "video_id", $val[snippet][resourceId][videoId]);
 				else
-					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "no", ($nowPage-1)*$videosPerPage+$key+1);
+					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "category", $category, "no", ($nowPage-1)*$videosPerPage+$key+1);
 				$videos[$key][channelUrl] = "//www.youtube.com/channel/".$val[snippet][channelId];
 			}
 			
@@ -118,16 +125,16 @@ class youtubeView extends youtube {
 			Context::set("totalPages", $totalPages);
 			Context::set("totalVideos", $totalVideos);
 			Context::set("videos", $videos);
+			Context::set("updater", $updater);
 			
 			//Part: Peruse
 			if(is_numeric($videoPosition)) {
 				$video = $videos[($videoPosition-1)%$videosPerPage];
 				$videoId = $video[snippet][resourceId][videoId];
 			} else if(isset($videoId)) {
-				$temp = $youtube->videos->browse("snippet", NULL, $videoId);
-				$video = $temp[items][0];
+				//Precise Video Info
+				$video = $oYoutubeModel->getVideo($apiKey, $videoId);
 			}
-			//var_dump($video);
 			if(isset($videoId) || isset($no)) {
 				$video[url] = getNotEncodedUrl("", "mid", $this->mid, "video_id", $videoId);
 				$video[fullUrl] = $_SERVER["HTTP_HOST"].$video[url];
@@ -154,12 +161,16 @@ class youtubeView extends youtube {
 				Context::set("videoSize", $playerSize);
 			}
 		} else {
-			//ERROR MSG
-			$msg = Context::getLang($youtube->error);
-			if(!$msg) $msg = $youtube->error;
-			Context::set("error_msg", $msg);
-			$this->setTemplateFile("error");
+			$this->dispYoutubeShowError("CACHE_IS_NOT_AVAILABLE");
 		}
+	}
+	
+	private function dispYoutubeShowError($message) {
+		$plainMessage = Context::getLang($message);
+		if(!$plainMessage) $plainMessage = $message;
+		Context::set("error_msg", $plainMessage);
+		$this->setTemplateFile("error");
+		exit;
 	}
 }
 ?>

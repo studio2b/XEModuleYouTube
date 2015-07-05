@@ -1,0 +1,15 @@
+<query id='browseCacheTime' action='select'>
+	<tables>
+		<table name='youtube_videos' />
+	</tables>
+	<columns>
+		<column name='count(no)' alias='counter' />
+		<column name='min(timestamp)' alias='timestamp' />
+	</columns>
+	<conditions>
+		<condition operation='equal' column='id' var='id' />
+	</conditions>
+	<groups>
+		<group column='id' />
+	</groups>
+</query>

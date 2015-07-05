@@ -17,6 +17,9 @@ class youtube extends ModuleObject {
 			$oModuleController->insertTrigger($trigger[name], $trigger[module], $trigger[type], $trigger[func], $trigger[position]);
 		}
 		
+		//$oModuleController = &getController('module');
+		//$oModuleController->insertActionForward('youtube', 'controller', 'procYoutubeUpdateCache');
+		
 		return new Object();
 	}
 	

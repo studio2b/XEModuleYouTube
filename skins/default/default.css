@@ -4,9 +4,15 @@ default.css
 Studio2b
 Michael Son(mson0129@gmail.com)
 08JUL2015 - This file is newly created.
+05JUL2015 - Category is supported.
 */
 
 @charset "utf-8";
+
+ul.categoryTab {position: relative; margin: 0; padding: 0; list-style: none; zoom: 1; border: 0;}
+ul.categoryTab li {float: left; margin: 0 2px 0 0; border: 1px solid #e0e0e0; border-top: 0; border-bottom: 0;}
+ul.categoryTab li a {position: relative; border-top: 1px solid #e0e0e0; float: left; height: 28px; line-height: 28px; padding: 0 20px; font-size: 11px; text-decoration: none; color: #666; box-sizing: border-box;}
+ul.categoryTab li.on a {color: #000; border-top: 2px solid #CDA25A;}
 
 table {width: 100%; border-collapse: collapse; border-top: 1px solid #D8D8D8; border-bottom: 1px solid #D8D8D8; color: #4a4a4a;}
 table thead th {margin: 0; border: 0; padding: 14px 0 15px; border-bottom: double #DBDBDB; height: 14px; white-space: nowrap;}

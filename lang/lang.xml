@@ -33,6 +33,14 @@
 		<value xml:lang="ko"><![CDATA[그만두기]]></value>
 		<value xml:lang="en"><![CDATA[Cancel]]></value>
 	</item>
+	<item name="youtube_category">
+		<value xml:lang="ko"><![CDATA[카테고리]]></value>
+		<value xml:lang="en"><![CDATA[Category]]></value>
+	</item>
+	<item name="youtube_category_name">
+		<value xml:lang="ko"><![CDATA[카테고리 이름]]></value>
+		<value xml:lang="en"><![CDATA[Category Name]]></value>
+	</item>
 
 	<!--Admin: Browse-->
 	<item name="youtube_menu_management">

@@ -1,6 +1,6 @@
-<query id='getCache' action='select'>
+<query id='browseCaches' action='select'>
 	<tables>
-		<table name='youtube_video' />
+		<table name='youtube_videos' />
 	</tables>
 	<columns>
 		<column name='*' />

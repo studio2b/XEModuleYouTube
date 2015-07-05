@@ -1,0 +1,10 @@
+<table name="youtube_videos">
+	<column name="id" type="varchar" size="255" notnull="notnull" primary_key="primary_key" />
+	<column name="no" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+	<column name="title" type="varchar" size="255" />
+	<column name="description" type="text" />
+	<column name="channel" type="varchar" size="255" />
+	<column name="utc" type="number" size="14" />
+	<column name="item" type="text" />
+	<column name="timestamp" type="number" size="14" default="0" />
+</table>

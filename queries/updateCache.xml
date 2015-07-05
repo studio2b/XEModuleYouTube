@@ -1,8 +1,12 @@
 <query id='updateCache' action='update'>
 	<tables>
-		<table name='youtube_video' />
+		<table name='youtube_videos' />
 	</tables>
 	<columns>
+		<column name='title' var='title' />
+		<column name='description' var='description' />
+		<column name='channel' var='channel' />
+		<column name='utc' var='utc' filter='number' />
 		<column name='item' var='item' />
 		<column name='timestamp' var='timestamp' />
 	</columns>

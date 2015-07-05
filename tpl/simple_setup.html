@@ -1,8 +1,39 @@
+<script>
+var category_counter = {is_array($module_info->playlist_id) ? count($module_info->playlist_id) : 1};
+function addCategory() {
+	var groupOfCategory = document.getElementById('groupOfCategory');
+	
+	var div = document.createElement("div");
+	div.className = "x_controls";
+	
+	var categoryName = document.createElement("input");
+	categoryName.type = "text";
+	categoryName.name = "category_name[]";
+	categoryName.placeholder = "{$lang->youtube_category_name}";
+	
+	var categoryId = document.createElement("input");
+	categoryId.type = "text";
+	categoryId.name = "playlist_id[]";
+	categoryId.placeholder = "{$lang->playlist_id}";
+	
+	var eraser = document.createElement("a");
+	eraser.href = "javascript:document.getElementById('category"+category_counter+"').parentNode.remove();";
+	eraser.id = "category"+category_counter++;
+	eraser.innerHTML = "<i class='xi-close-circle'></i>";
+	
+	div.appendChild(categoryName);
+	div.appendChild(categoryId);
+	div.appendChild(eraser);
+	groupOfCategory.appendChild(div);
+	
+	return true;
+}
+</script>
 <style type='text/css'>
 	@import url('//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css');
 	form#fo_obj .x_icon-question-sign {width: 14px;}
 </style>
-<form id="fo_obj" class="x_form-horizontal" action="./" method="post" enctype="multipart/form-data">
+<form class='x_form-horizontal' action='./' method='post' enctype='multipart/form-data'>
 	<input type="hidden" name="act" value="procYoutubeAdminUpdateSimpleSetup" />
 	<input type="hidden" name="mid" value="{$module_info->mid}" />
 	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
@@ -19,9 +50,27 @@
 		</div>
 		<div class="x_control-group">
 			<label class="x_control-label" for="playlist_id"><i class='xi-db-pull'></i> {$lang->playlist_id}</label>
-			<div class="x_controls">
-				<input type="text" name="playlist_id" id="playlist_id" value="{$module_info->playlist_id}" />
-				<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+			<div id="groupOfCategory">
+				<!--@if(is_array($module_info->playlist_id))-->
+				<div class="x_controls" loop="$module_info->playlist_id=>$key,$val">
+					<input type="text" name="category_name[]" id="category_name" placeholder="{$lang->youtube_category_name}" value="{$module_info->category_name[$key]}"|cond="!is_null($module_info->category_name[$key])" />
+					<input type="text" name="playlist_id[]" id="playlist_id" value="{$module_info->playlist_id[$key]}" placeholder="{$lang->playlist_id}" />
+					<!--@if($key>0)-->
+					<a href="javascript:document.getElementById('category{$key}').parentNode.remove();" id="category{$key}"><i class='xi-close-circle'></i></a>
+					<!--@else-->
+					<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+					<!--@end-->
+				</div>
+				<!--@else-->
+				<div class="x_controls">
+					<input type="text" name="category_name[]" id="category_name" placeholder="{$lang->youtube_category_name}" />
+					<input type="text" name="playlist_id[]" id="playlist_id" value="{$module_info->playlist_id}" placeholder="{$lang->playlist_id}" />
+					<a href="#playlist_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				</div>
+				<!--@end-->
+			</div>
+			<div class='x_controls'>
+				<a alt='addPlaylistId' href='javascript:addCategory();'><i class='xi-plus-circle'></i></a>
 				<p id="playlist_id_help" class="x_help-block" hidden>{$lang->about_playlist_id}</p>
 			</div>
 		</div>
@@ -67,6 +116,7 @@
 			<label class="x_control-label" for="using_video_id"><i class='xi-movie'></i> {$lang->using_video_id}</label>
 			<div class="x_controls">
 				<input type="checkbox" name="using_video_id" id="using_video_id" value="Y" checked="checked"|cond="$module_info->using_video_id=='Y'" />
+				
 				<a href="#using_video_id_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="using_video_id_help" class="x_help-block" hidden>{$lang->about_using_video_id}</p>
 			</div>
@@ -74,7 +124,7 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="cache_time"><i class='xi-time'></i> {$lang->cache_time}</label>
 			<div class="x_controls">
-				<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time?$module_info->cache_time:0}" />
+				<input type="text" name="cache_time" id="cache_time" value="{$module_info->cache_time?$module_info->cache_time-0:10}" />
 				<a href="#cache_time_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="cache_time_help" class="x_help-block" hidden>{$lang->about_cache_time}</p>
 			</div>
