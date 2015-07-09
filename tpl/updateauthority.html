@@ -1,0 +1,9 @@
+<include target="./_header.html" />
+<h2>
+	<i class='xi-cog'></i> {$lang->youtube_update_menu_authority} &gt;
+	<a href="{getSiteUrl($module_info->domain,'','mid',$module_info->mid)}" target="_blank"|cond="$module=='admin'">
+		<!--@if(strpos($module_info->browser_title, '$user_lang->') === false)-->
+		{$module_info->browser_title}<!--@else-->{htmlspecialchars($module_info->browser_title)}<!--@end-->({$module_info->mid}<block cond="$module_info->is_default=='Y'">({$lang->is_default})</block>)
+	</a>
+</h2>
+{$authority}

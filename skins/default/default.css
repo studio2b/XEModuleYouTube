@@ -9,6 +9,8 @@ Michael Son(mson0129@gmail.com)
 
 @charset "utf-8";
 
+div.buttonArea {padding: 10px 0; text-align: right;}
+
 ul.categoryTab {position: relative; margin: 0; padding: 0; list-style: none; zoom: 1; border: 0;}
 ul.categoryTab li {float: left; margin: 0 2px 0 0; border: 1px solid #e0e0e0; border-top: 0; border-bottom: 0;}
 ul.categoryTab li a {position: relative; border-top: 1px solid #e0e0e0; float: left; height: 28px; line-height: 28px; padding: 0 20px; font-size: 11px; text-decoration: none; color: #666; box-sizing: border-box;}
@@ -26,6 +28,10 @@ table a {color: #4a4a4a;}
 div.pages {padding: 13px 0; text-align: center; font-size: 13px;}
 	div.pages a, div.pages strong {display: inline-block; padding: 1px 8px; border-radius: 2px; background-color: #F6F6F6; color: #767676; font: 700 11px/22px Tahoma,Sans-serif; vertical-align: top; text-decoration: none;}
 	div.pages strong {color: #D88700;}
+
+div.youtube_popup {z-index: 99999; background-color: rgba(0,0,0,0.75); color: #FFF; position: fixed; top: 0; right: 0; bottom: 0; left: 0; text-align: center; white-space: nowrap;}
+div.youtube_popup:before {content: ''; display: inline-block; height: 100%; vertical-align: middle; margin-right: -0.25em;}
+div.youtube_popup .centered {display: inline-block; vertical-align: middle; white-space: initial;}
 
 /*peruse*/
 div.peruse {margin-bottom: 75px;}

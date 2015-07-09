@@ -15,3 +15,7 @@
 	</span>
 </div>
 <p class="x_alert x_alert-info" id="aboutModule" hidden>{$lang->about_youtube_module}</p>
+<ul class="x_nav x_nav-tabs" cond="$module_info && $act != 'dispBoardAdminContent' && $act != 'dispBoardAdminDeleteBoard'">
+	<li cond="$module_srl" class="x_active"|cond="$act=='dispYoutubeAdminUpdate'"><a href="{getUrl('act','dispYoutubeAdminUpdate','module_srl')}">{$lang->youtube_update_menu}</a></li>
+	<li cond="$module_srl" class="x_active"|cond="$act=='dispYoutubeAdminUpdateAuthority'"><a href="{getUrl('act','dispYoutubeAdminUpdateAuthority')}">{$lang->cmd_manage_grant}</a></li>
+</ul>

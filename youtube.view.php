@@ -127,6 +127,24 @@ class youtubeView extends youtube {
 			Context::set("videos", $videos);
 			Context::set("updater", $updater);
 			
+			//Player Width
+			if(is_null($this->module_info->player_width)) {
+				$playerSize[width] = 640;
+			} else {
+				$playerSize[width] = $this->module_info->player_width;
+			}
+			//Player Height
+			if(is_null($this->module_info->player_height)) {
+				if(is_null($this->module_info->player_width)) {
+					$playerSize[height] = 480;
+				} else {
+					$playerSize[height] = $playerSize[width]/4*3;
+				}
+			} else {
+				$playerSize[height] = $this->module_info->player_height;
+			}
+			Context::set("videoSize", $playerSize);
+			
 			//Part: Peruse
 			if(is_numeric($videoPosition)) {
 				$video = $videos[($videoPosition-1)%$videosPerPage];
@@ -142,23 +160,6 @@ class youtubeView extends youtube {
 				Context::addBrowserTitle($video[snippet][title]);
 				Context::set("videoId", $videoId);
 				Context::set("video", $video);
-				//Player Width
-				if(is_null($this->module_info->player_width)) {
-					$playerSize[width] = 640;
-				} else {
-					$playerSize[width] = $this->module_info->player_width;
-				}
-				//Player Height
-				if(is_null($this->module_info->player_height)) {
-					if(is_null($this->module_info->player_width)) {
-						$playerSize[height] = 480;
-					} else {
-						$playerSize[height] = $playerSize[width]/4*3;
-					}
-				} else {
-					$playerSize[height] = $this->module_info->player_height;
-				}
-				Context::set("videoSize", $playerSize);
 			}
 		} else {
 			$this->dispYoutubeShowError("CACHE_IS_NOT_AVAILABLE");

@@ -1,9 +1,15 @@
 @charset "utf-8";
 
-div.youtubeMSkinDefault ul li {height: 50px; border-bottom: 1px solid #EEE; white-space: nowrap; overflow: hidden;}
-div.youtubeMSkinDefault ul li:first-child {border-top: 1px solid #EEE;}
-div.youtubeMSkinDefault ul li a {display: block; height: 50px; color: #555;}
-div.youtubeMSkinDefault ul li img {max-height: 100%; vertical-align: middle;}
+div.youtubeMSkinDefault ul {margin: 0; padding: 0;}
+
+div.youtubeMSkinDefault ul.categoryTab {white-space: nowrap; overflow-x: auto;}
+div.youtubeMSkinDefault ul.categoryTab li {display: inline-block; padding: 1em;}
+div.youtubeMSkinDefault ul.categoryTab li a {display: block; color: #555; text-decoration: none;}
+
+div.youtubeMSkinDefault ul.videoList li {height: 50px; border-bottom: 1px solid #EEE; white-space: nowrap; overflow: hidden;}
+div.youtubeMSkinDefault ul.videoList li:first-child {border-top: 1px solid #EEE;}
+div.youtubeMSkinDefault ul.videoList li a {display: block; height: 50px; color: #555;}
+div.youtubeMSkinDefault ul.videoList li img {max-height: 100%; vertical-align: middle;}
 span.youtubeMSkinDefaultBrowseThumbnail {margin-right: 10px;}
 
 div.youtubeMSkinDefaultPages {padding: 15px 0; text-align: center; font-size: 1.4em;}

@@ -1,8 +1,15 @@
 <load target="css/skin.css" />
-
 <div class='youtubeMSkinDefault'>
+	<!--@if(is_array($categoryName) && count($categoryName) > 1)-->
+	<ul class='categoryTab'>
+		<!--@foreach($categoryName as $key => $val)-->
+		<li class="on"|cond="$category==$key"><a href="{getNotEncodedUrl('','mid',$mid,'page',$nowPage,'category',$key)}"><!--@if(empty($val))-->{$lang->untitle}<!--@else-->{$val}<!--@end--></a></li>
+		<!--@end-->
+	</ul>
+	<!--@end-->
+	
 	<!--@if($video==false)-->
-	<ul>
+	<ul class='videoList'>
 	<!--@foreach($videos as $key=>$val)-->
 		<!--@if(is_numeric($key))-->
 		<li>

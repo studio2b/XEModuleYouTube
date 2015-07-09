@@ -1,5 +1,35 @@
 <include target="_header.html" />
 <include cond="$video!=false" target="_peruse.html" />
+<script type="text/javascript">
+function showPopup(videoId) {
+	var youtube_popup = document.getElementById('youtube_popup');
+	var youtube_container = document.getElementById('youtube_popup_container');
+	var youtube_player = document.createElement("iframe");
+	
+	youtube_player.id = "youtube_popup_player";
+	youtube_player.width = {$videoSize[width]};
+	youtube_player.height = {$videoSize[height]};
+	youtube_player.style.border = "0";
+	youtube_player.setAttribute("allowfullscreen", null);
+	
+	youtube_player.src = "https://www.youtube.com/embed/"+videoId;
+	youtube_container.appendChild(youtube_player);
+	youtube_popup.style.display = "block";
+}
+
+function closePopup() {
+	var youtube_popup = document.getElementById('youtube_popup');
+	var youtube_container = document.getElementById('youtube_popup_container');
+	
+	youtube_popup.style.display = "none";
+	youtube_container.innerHTML = null;
+}
+</script>
+<!--BUTTONS-->
+<div class='buttonArea'>
+	<a cond="$grant->manager" class="btn" href="{getUrl('act','dispYoutubeAdminUpdate')}" title="{$lang->cmd_setup}"><i class="xi-cog"></i> {$lang->cmd_setup}</a>
+</div>
+<!--/BUTTONS-->
 <!--@if(is_array($categoryName) && count($categoryName) > 1)-->
 <ul class='categoryTab'>
 	<!--@foreach($categoryName as $key => $val)-->
@@ -7,6 +37,7 @@
 	<!--@end-->
 </ul>
 <!--@end-->
+<!--LIST-->
 <table>
 	<thead>
 		<tr>
@@ -20,7 +51,7 @@
 <!--@foreach($videos as $key=>$val)-->
 	<!--@if(is_numeric($key))-->
 		<tr>
-			<td class="browse_thumbnail"><a href="{$val[url]}"><img src="{$val[snippet][thumbnails][high][url]}" /></a></td>
+			<td class="browse_thumbnail"><a href="javascript:showPopup('{$val[snippet][resourceId][videoId]}');"><img src="{$val[snippet][thumbnails][high][url]}" /></a></td>
 			<td class="browse_title"><a href="{$val[url]}">{$val[snippet][title]}</a></td>
 			<td class="browse_channel"><a href="{$val[channelUrl]}" target="_blank">{$val[snippet][channelTitle]}</a></td>
 			<td class="browse_date">{date("Y.m.d", $val[snippet][kst])}</td>
@@ -29,6 +60,7 @@
 <!--@end-->
 	</tbody>
 </table>
+<!--/LIST-->
 <!--BROWSE PAGE-->
 <div class="pages">
 	<a href="{getNotEncodedUrl('','mid',$mid)}"><i class="xi-angle-left"></i>&nbsp;{$lang->first_page}</a>
@@ -39,4 +71,13 @@
 	<a href="{getNotEncodedUrl('','mid',$mid,'page',$totalPages,'category',$category)}">{$lang->last_page}&nbsp;<i class="xi-angle-right"></i></a>
 </div>
 <!--/BROWSE PAGE-->
+<!--SEARCH-->
+<!--/SEARCH-->
+<!--POPUP-->
+<div class="youtube_popup" id='youtube_popup' style='display: none;' onclick="closePopup();">
+	<i class='xi-close' style='font-size: 2em; position: absolute; top: 2em; right: 2em;'></i>
+	<div class="centered" id="youtube_popup_container">
+	</div>
+</div>
+<!--/POPUP-->
 <include target="_footer.html" />

@@ -37,7 +37,7 @@ function addCategory() {
 		{$module_info->browser_title}<!--@else-->{htmlspecialchars($module_info->browser_title)}<!--@end-->({$module_info->mid}<block cond="$module_info->is_default=='Y'">({$lang->is_default})</block>)
 	</a>
 </h2>
-<form class='x_form-horizontal' action='./' method='post' enctype='multipart/form-data'>
+<form class='x_form-horizontal' action='./' method='post' enctype='multipart/form-data' onsubmit='return procFilter(this, insert_grant);'>
 	<input type="hidden" name="act" value="procYoutubeAdminUpdate" />
 	<input type="hidden" name="mid" value="{$module_info->mid}" />
 	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
@@ -230,3 +230,4 @@ function addCategory() {
 		</div>
 	</div>
 </form>
+{$authority}

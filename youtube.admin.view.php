@@ -65,6 +65,7 @@ class youtubeAdminView extends youtube {
 			}
 		}
 		
+		//Layout
 		$oLayoutModel = getModel('layout');
 		$layouts = $oLayoutModel->getLayoutList();
 		$mobileLayouts = $oLayoutModel->getLayoutList(0,"M");
@@ -78,7 +79,14 @@ class youtubeAdminView extends youtube {
 		Context::set('mskin_list', $mobileSkins);
 	}
 	
-	function dispYoutubeAdminDelete() {
+	public function dispYoutubeAdminUpdateAuthority() {
+		// get the grant infotmation from admin module
+		$oModuleAdminModel = getAdminModel('module');
+		$authority = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
+		Context::set('authority', $authority);
+	}
+	
+	public function dispYoutubeAdminDelete() {
 		$module_srl = Context::get('module_srl');
 		if(!$module_srl && $this->module_srl) {
 			$module_srl = $this->module_srl;

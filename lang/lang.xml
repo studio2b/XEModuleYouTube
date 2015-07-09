@@ -110,7 +110,13 @@
 	<item name="youtube_performance">
 		<value xml:lang="ko"><![CDATA[성능]]></value>
 		<value xml:lang="en"><![CDATA[Performance]]></value>
-	</item> 
+	</item>
+	
+	<!--Admin: Update-->
+	<item name="youtube_update_menu_authority">
+		<value xml:lang="ko"><![CDATA[유튜브 메뉴 권한 업데이트]]></value>
+		<value xml:lang="en"><![CDATA[Update Authority of YouTube Menus]]></value>
+	</item>
 	
 	<!--SimpleSetup-->
 	<item name="api_key">

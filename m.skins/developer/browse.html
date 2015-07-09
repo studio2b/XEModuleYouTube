@@ -1,3 +1,12 @@
+<script type='text/javascript'>
+	jQuery.post("/xe/",
+		{mid:"{$mid}", act: "procYoutubeUpdateCache", items: 20, page: 1, asc: true},
+		function(data)	{
+			console.log(data);
+		},
+		"json"
+	);
+</script>
 <style type='text/css'>
 	@import url('//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css');
 	div#youtubeSkinDeveloper {padding: 1em;}
@@ -63,7 +72,7 @@
 	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(print_r($lang, true)))}
 	<h2><i class='xi-ellipsis-h'></i> 기타</h2>
 	<h3 id='youtubeSkinDeveloperETCCategoryName'>$categoryName &mdash; 카테고리 이름입니다.</h3>
-	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(preg_replace("/\[(channelurl|url)\]\s\=\>\s(.*)/i", "[$1] => <a href='$2'>$2</a>", print_r($$categoryName, true))))}
+	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(preg_replace("/\[(channelurl|url)\]\s\=\>\s(.*)/i", "[$1] => <a href='$2'>$2</a>", print_r($categoryName, true))))}
 	<h3 id='youtubeSkinDeveloperETCUpdater'>$updater &mdash; 캐시의 만료를 파악하고 필요에 따라 유튜브 서버와 통신하여 캐시를 새로고침하는, 업데이터의 결과값입니다.</h3>
 	= {str_replace("    ", str_repeat("&nbsp;", 4), nl2br(preg_replace("/\[(channelurl|url)\]\s\=\>\s(.*)/i", "[$1] => <a href='$2'>$2</a>", print_r($updater, true))))}
 	<h3 id='youtubeSkinDeveloperETCMid'>$mid &mdash; 메뉴 아이디 값입니다.</h3>

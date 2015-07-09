@@ -25,6 +25,9 @@
 	<permissions>
 		<permission action="getYoutubeAdminSimpleSetup" target="manager" />
 		<permission action="dispYoutubeAdminBrowse" target="manager" />
+		<permission action="dispYoutubeAdminUpdate" target="manager" />
+		<permission action="dispYoutubeAdminUpdateAuthority" target="manager" />
+		<permission action="dispYoutubeAdminDelete" target="manager" />
 		<permission action="procYoutubeAdminUpdateSimpleSetup" target="manager" />
 	</permissions>
 	<actions>
@@ -33,6 +36,7 @@
 		<!--AdminView-->
 		<action name="dispYoutubeAdminBrowse" type="view" admin_index="true" />
 		<action name="dispYoutubeAdminUpdate" type="view" />
+		<action name="dispYoutubeAdminUpdateAuthority" type="view" />
 		<action name="dispYoutubeAdminDelete" type="view" />
 		<!--AdminController-->
 		<action name="procYoutubeAdminUpdate" type="controller" />
