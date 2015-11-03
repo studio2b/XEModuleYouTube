@@ -1,5 +1,5 @@
 <?php
-//Copyright (c) 2014 Studio2b
+//Copyright (c) 2015 Studio2b
 //xFacility2014
 //xFCurl
 //Studio2b(www.studio2b.kr)
