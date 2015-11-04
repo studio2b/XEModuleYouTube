@@ -7,13 +7,13 @@
 //07JUN2015(1.0.0.) - This module was newly created.
 //05JUL2015(1.1.0.) - Category is supported.
 class youtubeAdminModel extends youtube {
-	public function getYoutubeAdminSimpleSetup($moduleSrl, $setupUrl)
-	{
+	public function getYoutubeAdminSimpleSetup($moduleSrl, $setupUrl) {
 		if (!$moduleSrl)
 			return;
 		//Module
 		$oModuleModel = getModel("module");
 		$moduleInfo = $oModuleModel->getModuleInfoByModuleSrl($moduleSrl);
+		
 		if(!$moduleInfo)
 			return;
 		if(is_array(json_decode($moduleInfo->playlist_id, true))) {

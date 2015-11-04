@@ -105,6 +105,8 @@ class youtubeView extends youtube {
 		$totalPages = ceil($totalVideos/$videosPerPage);
 		
 		if($videos!==false || !is_array($videos)) {
+			Context::set("PlaylistId", $playlistId);
+			
 			$nowPage = min($nowPage, $totalPages);
 			
 			foreach($videos as $key=>$val) {

@@ -80,7 +80,6 @@ class youtubeAdminView extends youtube {
 	}
 	
 	public function dispYoutubeAdminUpdateAuthority() {
-		// get the grant infotmation from admin module
 		$oModuleAdminModel = getAdminModel('module');
 		$authority = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
 		Context::set('authority', $authority);

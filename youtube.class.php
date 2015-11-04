@@ -16,10 +16,6 @@ class youtube extends ModuleObject {
 		foreach($this->triggers as $trigger) {
 			$oModuleController->insertTrigger($trigger[name], $trigger[module], $trigger[type], $trigger[func], $trigger[position]);
 		}
-		
-		//$oModuleController = &getController('module');
-		//$oModuleController->insertActionForward('youtube', 'controller', 'procYoutubeUpdateCache');
-		
 		return new Object();
 	}
 	
@@ -30,7 +26,6 @@ class youtube extends ModuleObject {
 			if(!$res)
 				return true;
 		}
-		
 		return false;
 	}
 	
@@ -43,7 +38,6 @@ class youtube extends ModuleObject {
 				$oModuleController->insertTrigger($trigger[name], $trigger[module], $trigger[type], $trigger[func], $trigger[position]);
 			}
 		}
-		
 		return new Object(0,"success_updated");
 	}
 	
@@ -52,7 +46,6 @@ class youtube extends ModuleObject {
 		foreach($this->triggers as $trigger) {
 			$res = $oModuleModel->deleteTrigger($trigger[name], $trigger[module], $trigger[type], $trigger[func], $trigger[position]);
 		}
-		
 		return new Object();
 	}
 	

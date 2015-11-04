@@ -2,7 +2,7 @@
 require_once(_XE_PATH_.'modules/board/board.view.php');
 
 class youtubeMobile extends youtubeView {
-	function init(){
+	function init() {
 		//xFacility2014 - including the part of frameworks
 		require_once($this->module_path."XFCurl.class.php");
 		require_once($this->module_path."XFYoutube.class.php");

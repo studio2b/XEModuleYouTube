@@ -6,6 +6,7 @@
 //Michael Son(mson0129@gmail.com)
 //30NOV2014(1.0.0.) - Newly added.
 //07JUN2015(1.0.0.) - Ported for XpressEngine
+//09JUL2015(1.0.1.) - The error returing false when there is no data to send is fixed.
 class XFCurl {
 	var $method, $url, $what;
 	var $protocol, $host, $port, $uri; //Parsing URL
@@ -63,14 +64,14 @@ class XFCurl {
 	}
 	
 	function request($header=NULL, $data=NULL) {
-		if(is_null($header) && is_null($data))
-			return false;
 		$crlf = "\r\n";
 		
 		if($this->method=="get") {
-			$param = $this->getParameter($data);
-			if(!is_null($param))
-				$this->url .= "?".$param;
+			if(!is_null($data)) {
+				$param = $this->getParameter($data);
+				if(!is_null($param))
+					$this->url .= "?".$param;
+			}
 		} else {
 			if(is_array($header)) {
 				foreach($header as $value) {
@@ -80,10 +81,12 @@ class XFCurl {
 					}
 				}
 			}
-			if($jsonFlag==true) {
-				$param = json_encode($data);
-			} else {
-				$param = $this->getParameter($data);
+			if(!is_null($data)) {
+				if($jsonFlag==true) {
+					$param = json_encode($data);
+				} else {
+					$param = $this->getParameter($data);
+				}
 			}
 			$postParam = $param;
 		}

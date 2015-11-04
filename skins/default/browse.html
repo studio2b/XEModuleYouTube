@@ -12,7 +12,7 @@ function showPopup(videoId) {
 	youtube_player.style.border = "0";
 	youtube_player.setAttribute("allowfullscreen", null);
 	
-	youtube_player.src = "https://www.youtube.com/embed/"+videoId;
+	youtube_player.src = "https://www.youtube.com/embed/"+videoId+"?autoplay=1";
 	youtube_container.appendChild(youtube_player);
 	youtube_popup.style.display = "block";
 }
