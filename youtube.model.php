@@ -36,7 +36,6 @@ class youtubeModel extends youtube {
 					$channel = $youtube->channels->browse("contentDetails", null, null, $return);
 					if($channel===false || is_null($channel[items][0][contentDetails][relatedPlaylists][uploads])) {
 						$return = false;
-						break;
 					} else {
 						$return = $channel[items][0][contentDetails][relatedPlaylists][uploads];
 					}
