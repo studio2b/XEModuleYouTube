@@ -1,4 +1,4 @@
-# XEModuleYouTube
+# XE 유튜브 모듈
 ![BSD License](https://img.shields.io/github/license/studio2b/XEModuleYouTube)
 ![Repo Size](https://img.shields.io/github/repo-size/studio2b/XEModuleYouTube)
 ![Last Commit](https://img.shields.io/github/last-commit/studio2b/XEModuleYouTube)
