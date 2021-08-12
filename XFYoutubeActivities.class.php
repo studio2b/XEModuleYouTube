@@ -6,7 +6,7 @@
 //Michael Son(mson0129@gmail.com)
 //01DEC2014(1.0.0.)
 //07JUN2015(1.0.0.) - Ported for XpressEngine
-//12AUG2021(1.0.1.) - Codes using XFLanguage class are commented. And array keys are wrapped with double quotation marks(""). "unser()" is corrected into "unset()". Undefined variable "$header" got a value as NULL.
+//12AUG2021(1.0.1.) - Codes using XFLanguage class are commented. Array keys are wrapped with double quotation marks(""). "unser()" is corrected into "unset()". Undefined variable "$header" got a value as NULL.
 class XFYoutubeActivities {
 	var $api_key, $token, $token_type;
 	
