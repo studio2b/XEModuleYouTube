@@ -1,11 +1,12 @@
 <?php
-//Copyright (c) 2014 Studio2b
+//Copyright (c) 2021 Studio2b
 //xFacility2014
 //xFYoutubePlaylists
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //01DEC2014(1.0.0.) - Newly added.
 //07JUN2015(1.0.0.) - Ported for XpressEngine
+//12AUG2021(1.0.1.) - "$token_type" parameter is added to XFYoutubePlaylists method. Array keys are wrapped with double quotation marks(""). Undefined variable "$data" got a value as NULL.
 class XFYoutubePlaylists {
 	var $api_key, $token, $token_type;
 	var $apiUri = "https://www.googleapis.com/youtube/v3/playlists";

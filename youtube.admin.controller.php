@@ -1,8 +1,8 @@
 <?php
-//Copyright (c) 2015 Studio2b
+//Copyright (c) 2021 Studio2b
 //YouTubeModule
 //YoutubeAdminController
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //07JUN2015(1.0.0.) - This module was newly created.
 //27JUN2015(1.1.0.) - Menu(Module Instance) Setup is available.

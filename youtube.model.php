@@ -1,13 +1,14 @@
 <?php
-//Copyright (c) 2015 Studio2b
+//Copyright (c) 2021 Studio2b
 //YouTubeModule
 //YoutubeModel
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //07JUN2015(1.0.0.) - This file was newly created.
 //19JUN2015(1.1.0.) - This module was updated for cache.
 //26JUN2015(1.1.1.) - The queries are converted to XE XML Query(from low-level to high-level).
 //02JUL2015(2.0.0.) - Codes have been rewrited to apply new structure and logics.
+//12AUG2021(1.0.1.) - Array keys are wrapped with double quotation marks("").
 class youtubeModel extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -32,15 +33,15 @@ class youtubeModel extends youtube {
 			$result = $youtube->playlistItems->browse("id", null, $return, 0);
 			if($result===false) {
 				$channel = $youtube->channels->browse("contentDetails", null, $return);
-				if($channel===false || is_null($channel[items][0][contentDetails][relatedPlaylists][uploads])) {
+				if($channel===false || is_null($channel["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"])) {
 					$channel = $youtube->channels->browse("contentDetails", null, null, $return);
-					if($channel===false || is_null($channel[items][0][contentDetails][relatedPlaylists][uploads])) {
+					if($channel===false || is_null($channel["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"])) {
 						$return = false;
 					} else {
-						$return = $channel[items][0][contentDetails][relatedPlaylists][uploads];
+						$return = $channel["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"];
 					}
 				} else {
-					$return = $channel[items][0][contentDetails][relatedPlaylists][uploads];
+					$return = $channel["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"];
 				}
 			}
 			unset($result, $channel);
@@ -55,14 +56,14 @@ class youtubeModel extends youtube {
 		if(!is_null($playlistId) && !is_null($videoId)) {
 			$counter = 0;
 			while(true) {
-				$result = $youtube->playlistItems->browse("contentDetails", NULL, $playlistId, 50, $result[nextPageToken]);
+				$result = $youtube->playlistItems->browse("contentDetails", NULL, $playlistId, 50, $result["nextPageToken"]);
 				if($result===false) {
 					$return = false;
 					break;
 				} else {
-					foreach($result[items] as $val) {
+					foreach($result["items"] as $val) {
 						$counter++;
-						if($videoId==$val[contentDetails][videoId]) {
+						if($videoId==$val["contentDetails"]["videoId"]) {
 							$return = $counter;
 							break;
 						}
@@ -70,7 +71,7 @@ class youtubeModel extends youtube {
 				}
 				if(is_numeric($return)) {
 					break;
-				} else if(is_null($result[nextPageToken])) {
+				} else if(is_null($result["nextPageToken"])) {
 					$return = false;
 					break;
 				}
@@ -85,7 +86,7 @@ class youtubeModel extends youtube {
 	public function getVideo($apiKey, $videoId) {
 		$youtube = new XFYoutube(null, $apiKey);
 		$result = $youtube->videos->browse("snippet", NULL, $videoId);
-		return $result[items][0];
+		return $result["items"][0];
 	}
 	
 	//From/To Local DB
@@ -95,10 +96,10 @@ class youtubeModel extends youtube {
 		$args->no = $no;
 		$result = executeQuery("youtube.peruseCache", $args);
 		
-		$args->title = $item[snippet][title];
-		$args->description = $item[snippet][description];
-		$args->channel = $item[snippet][channelTitle];
-		$args->utc = $item[snippet][utc]; //utc + 32400 = utc + 9h * 60m * 60s = kst
+		$args->title = $item["snippet"]["title"];
+		$args->description = $item["snippet"]["description"];
+		$args->channel = $item["snippet"]["channelTitle"];
+		$args->utc = $item["snippet"]["utc"]; //utc + 32400 = utc + 9h * 60m * 60s = kst
 		$args->item = json_encode($item);
 		$args->timestamp = time();
 		if(empty($result->data)) {

@@ -1,8 +1,8 @@
 <?php
-//Copyright (c) 2015 Studio2b
+//Copyright (c) 2021 Studio2b
 //YouTubeModule
 //YoutubeView
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //07JUN2015(1.0.0.) - This module was newly created.
 //08JUN2015(1.0.1.) - The skin bug is fixed.(It can be ouccred when the skin value of module has nothing.)
@@ -15,6 +15,7 @@
 //26JUN2015(1.3.1.) - When cache data are crashed, read data from YouTube server NOT from cache.
 //02JUL2015(2.0.0.) - Codes have been rewrited to apply new structure and logics.
 //05JUL2015(2.1.0.) - Category is supported.
+//12AUG2021(2.1.1.) - "new Object" are changed into "new stdClass". And array keys are wrapped with double quotation marks("").
 class youtubeView extends youtube {
 	function init() {
 		//xFacility2014 - including the part of frameworks
@@ -42,7 +43,7 @@ class youtubeView extends youtube {
 		//Part: Browse
 		//Grant
 		if(!$this->grant->browse) {
-			return new Object(-1, "msg_not_permitted");
+			return new stdClass(-1, "msg_not_permitted");
 		}
 		
 		$apiKey = $this->module_info->api_key;
@@ -111,10 +112,10 @@ class youtubeView extends youtube {
 			
 			foreach($videos as $key=>$val) {
 				if($this->module_info->using_video_id=="Y")
-					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "page", $nowPage, "category", $category, "video_id", $val[snippet][resourceId][videoId]);
+					$videos[$key]["url"] = getNotEncodedUrl("", "mid", $this->mid, "page", $nowPage, "category", $category, "video_id", $val["snippet"]["resourceId"]["videoId"]);
 				else
-					$videos[$key][url] = getNotEncodedUrl("", "mid", $this->mid, "category", $category, "no", ($nowPage-1)*$videosPerPage+$key+1);
-				$videos[$key][channelUrl] = "//www.youtube.com/channel/".$val[snippet][channelId];
+					$videos[$key]["url"] = getNotEncodedUrl("", "mid", $this->mid, "category", $category, "no", ($nowPage-1)*$videosPerPage+$key+1);
+				$videos[$key]["channelUrl"] = "//www.youtube.com/channel/".$val["snippet"]["channelId"];
 			}
 			
 			//StartPage
@@ -131,35 +132,35 @@ class youtubeView extends youtube {
 			
 			//Player Width
 			if(is_null($this->module_info->player_width)) {
-				$playerSize[width] = 640;
+				$playerSize["width"] = 640;
 			} else {
-				$playerSize[width] = $this->module_info->player_width;
+				$playerSize["width"] = $this->module_info->player_width;
 			}
 			//Player Height
 			if(is_null($this->module_info->player_height)) {
 				if(is_null($this->module_info->player_width)) {
-					$playerSize[height] = 480;
+					$playerSize["height"] = 480;
 				} else {
-					$playerSize[height] = $playerSize[width]/4*3;
+					$playerSize["height"] = $playerSize["width"]/4*3;
 				}
 			} else {
-				$playerSize[height] = $this->module_info->player_height;
+				$playerSize["height"] = $this->module_info->player_height;
 			}
 			Context::set("videoSize", $playerSize);
 			
 			//Part: Peruse
 			if(is_numeric($videoPosition)) {
 				$video = $videos[($videoPosition-1)%$videosPerPage];
-				$videoId = $video[snippet][resourceId][videoId];
+				$videoId = $video["snippet"]["resourceId"]["videoId"];
 			} else if(isset($videoId)) {
 				//Precise Video Info
 				$video = $oYoutubeModel->getVideo($apiKey, $videoId);
 			}
 			if(isset($videoId) || isset($no)) {
-				$video[url] = getNotEncodedUrl("", "mid", $this->mid, "video_id", $videoId);
-				$video[fullUrl] = $_SERVER["HTTP_HOST"].$video[url];
-				$video[channelUrl] = "//www.youtube.com/channel/".$video[snippet][channelId];
-				Context::addBrowserTitle($video[snippet][title]);
+				$video["url"] = getNotEncodedUrl("", "mid", $this->mid, "video_id", $videoId);
+				$video["fullUrl"] = $_SERVER["HTTP_HOST"].$video["url"];
+				$video["channelUrl"] = "//www.youtube.com/channel/".$video["snippet"]["channelId"];
+				Context::addBrowserTitle($video["snippet"]["title"]);
 				Context::set("videoId", $videoId);
 				Context::set("video", $video);
 			}

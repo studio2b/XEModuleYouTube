@@ -1,12 +1,13 @@
 <?php
-//Copyright (c) 2015 Studio2b
+//Copyright (c) 2021 Studio2b
 //xFacility2014
 //xFCurl
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //30NOV2014(1.0.0.) - Newly added.
 //07JUN2015(1.0.0.) - Ported for XpressEngine
 //09JUL2015(1.0.1.) - The error returing false when there is no data to send is fixed.
+//12AUG2021(1.0.2.) - getParameter() is clearly static method.
 class XFCurl {
 	var $method, $url, $what;
 	var $protocol, $host, $port, $uri; //Parsing URL
@@ -24,7 +25,7 @@ class XFCurl {
 		}
 	}
 	
-	function getParameter($data) {
+	static function getParameter($data) {
 		if(is_array($data)) {
 			$step = 0;
 			$temp[$step] = $data;

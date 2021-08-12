@@ -1,11 +1,12 @@
 <?php
-//Copyright (c) 2014 Studio2b
+//Copyright (c) 2021 Studio2b
 //xFacility2014
 //xFYoutubeActivities
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //01DEC2014(1.0.0.)
 //07JUN2015(1.0.0.) - Ported for XpressEngine
+//12AUG2021(1.0.1.) - Codes using XFLanguage class are commented. And array keys are wrapped with double quotation marks(""). "unser()" is corrected into "unset()". Undefined variable "$header" got a value as NULL.
 class XFYoutubeActivities {
 	var $api_key, $token, $token_type;
 	
@@ -29,36 +30,39 @@ class XFYoutubeActivities {
 		//Not Tested
 		if(!is_null($this->token) || !is_null($channelId)) {
 			//Essential
-			$data[key] = $this->api_key;
-			$data[part] = $part;
+			$data["key"] = $this->api_key;
+			$data["part"] = $part;
 			//Selectional
 			if(!is_null($this->token)) {
 				if(!is_null($home) || !is_null($mine)) {
 					$header[] = "Authorization: ".$this->token_type." ".$this->token;
 					if(!is_null($home)) {
-						$data[home] = $home;
+						$data["home"] = $home;
 					} else {
-						$data[mine] = $mine;
+						$data["mine"] = $mine;
 					}
 				} else {
-					$data[channelId] = $channelId;
+					$data["channelId"] = $channelId;
 				}
 			}
 			//Additional(Optional)
 			if(!is_null($maxResults))
-				$data[maxResults] = $maxResults;
+				$data["maxResults"] = $maxResults;
 			if(!is_null($pageToken))
-				$data[pageToken] = $pageToken;
+				$data["pageToken"] = $pageToken;
 			if(!is_null($publishedAfter))
-				$data[publishedAfter] = $publishedAfter;
+				$data["publishedAfter"] = $publishedAfter;
 			if(!is_null($publishedBefore))
-				$data[publishedBefore] = $publishedBefore;
+				$data["publishedBefore"] = $publishedBefore;
 			if(!is_null($regionCode)) {
-				$data[regionCode] = $regionCode;
+				$data["regionCode"] = $regionCode;
 			} else {
+				$data["regionCode"] = "kr";
+				/*
 				$languageClass = new XFLanguage();
 				$languages = $languageClass->selectLanguages;
-				list($trashcan, $data[regionCode]) = explode("-", $languages[0]);
+				list($trashcan, $data["regionCode"]) = explode("-", $languages[0]);
+				*/
 			}
 			
 			$curlClass = new XFCurl("GET", "https://www.googleapis.com/youtube/v3/activities", $header, $data);
@@ -76,13 +80,14 @@ class XFYoutubeActivities {
 	
 	function insert($part, $fields=NULL, $bodyArray) {
 		//Not Tested
-		$data[key] = $this->api_key;
-		$data[part] = $part;
+		$data["key"] = $this->api_key;
+		$data["part"] = $part;
 		if(!is_null($fields))
-			$data[fields] = $fields;
+			$data["fields"] = $fields;
 		$getParam = "?".XFCurl::getParameter($data);
-		unser($data);
-		if(strpos($part, "snippet") && !is_null($bodyArray[snippet][description])) {
+		unset($data);
+		if(strpos($part, "snippet") && !is_null($bodyArray["snippet"]["description"])) {
+			$header = NULL;
 			$data = json_encode($bodyArray);
 			$curlClass = new XFCurl("GET", "https://www.googleapis.com/youtube/v3/activities".$getParam, $header, $data);
 			

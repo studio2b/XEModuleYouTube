@@ -1,8 +1,8 @@
 <?php
-//Copyright (c) 2014 Studio2b
+//Copyright (c) 2021 Studio2b
 //xFacility2014
 //xFYoutube
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //02DEC2014(1.0.0.) - Newly added.
 //07JUN2015(1.1.0.) - It's ported for XpressEngine. And getPlaylistItems is added.
@@ -12,6 +12,7 @@
 //11JUL2015(1.3.1.) - List error when a playlist get by channel id or username was corrected.
 //11JUL2015(1.3.2.) - Paging error when there is a unlisted or private video in a playlist was corrected.
 //19JUL2015(1.3.3.) - Paging error caused by requesting over 50 items was fixed. var $totalPage is not more available.
+//12AUG2021(1.0.1.) - Array keys are wrapped with double quotation marks(""). Undefined variable "$result" got a value as NULL. Undefined variable "$return" got a value as 0.
 class XFYoutube {
 	var $token;
 	var $activities, $channels, $playlists, $playlistItmes;
@@ -27,10 +28,12 @@ class XFYoutube {
 	
 	//For XpressEngine
 	function getTotalVideos($playlistId) {
+		$result = NULL;
+		$return = 0;
 		while(true) {
-			$result = $this->playlistItems->browse("id", NULL, $playlistId, 50, $result[nextPageToken]);
-			$return += count($result[items]);
-			if(is_null($result[nextPageToken]))
+			$result = $this->playlistItems->browse("id", NULL, $playlistId, 50, $result["nextPageToken"]);
+			$return += count($result["items"]);
+			if(is_null($result["nextPageToken"]))
 				break;
 		}
 		return $return;

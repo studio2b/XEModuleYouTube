@@ -1,4 +1,10 @@
 <?php
+//Copyright (c) 2021 Studio2b
+//YouTubeModule
+//YoutubeMobile
+//Studio2b(studio2b.github.io)
+//Michael Son(mson0129@gmail.com)
+//04NOV2015(1.0.0.) - This module was newly created.
 require_once(_XE_PATH_.'modules/board/board.view.php');
 
 class youtubeMobile extends youtubeView {

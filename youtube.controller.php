@@ -1,10 +1,11 @@
 <?php
-//Copyright (c) 2015 Studio2b
+//Copyright (c) 2021 Studio2b
 //YouTubeModule
 //YoutubeController
-//Studio2b(www.studio2b.kr)
+//Studio2b(studio2b.github.io)
 //Michael Son(mson0129@gmail.com)
 //07JUN2015(1.0.0.) - This module was newly created.
+//12AUG2021(1.0.1.) - Array keys are wrapped with double quotation marks("").
 class youtubeController extends youtube {
 	public function init() {
 		//xFacility2014 - including the part of frameworks
@@ -40,29 +41,29 @@ class youtubeController extends youtube {
 				$return->loop = 0;
 				$return->updatedVideos = 0;
 				while(true) {
-					$result = $youtube->playlistItems->browse("snippet", null, $playlistId, 50, $result[nextPageToken]);
+					$result = $youtube->playlistItems->browse("snippet", null, $playlistId, 50, $result["nextPageToken"]);
 					
-					foreach($result[items] as $key=>$val) {
+					foreach($result["items"] as $key=>$val) {
 						$oYoutubeModel->setCache($playlistId, $return->loop*50+$key, $val);
 						$return->updatedVideos++;
 					}
 					
-					if(is_numeric($items) && is_numeric($page) && $asc && ($loop*50+count($result[items])>=($page)*$items || is_null($result[nextPageToken]))) {
+					if(is_numeric($items) && is_numeric($page) && $asc && ($loop*50+count($result["items"])>=($page)*$items || is_null($result["nextPageToken"]))) {
 						$return->message = "UPDATE_PART_OF_CACHE_ASC";
 						$return->bool = true;
-						if(is_null($result[nextPageToken])) {
+						if(is_null($result["nextPageToken"])) {
 							//END_OF_LIST
 							$return->totalVideos = $return->updatedVideos;
 						} else {
-							$return->totalVideos = $result[pageInfo][totalResults];
+							$return->totalVideos = $result["pageInfo"]["totalResults"];
 						}
 						break;
-					} else if(is_numeric($items) && is_numeric($page) && $asc===false && $loop*50+count($result[items])>=$result[pageInfo][totalResults]-($page-1)*$items) {
+					} else if(is_numeric($items) && is_numeric($page) && $asc===false && $loop*50+count($result["items"])>=$result["pageInfo"]["totalResults"]-($page-1)*$items) {
 						$return->message = "UPDATE_PART_OF_CACHE_DESC";
 						$return->bool = true;
-						$return->totalVideos = $result[pageInfo][totalResults];
+						$return->totalVideos = $result["pageInfo"]["totalResults"];
 						break;
-					} else if(is_null($result[nextPageToken])) {
+					} else if(is_null($result["nextPageToken"])) {
 						$return->message = "END_OF_LIST";
 						$return->bool = true;
 						$return->totalVideos = $return->updatedVideos;
